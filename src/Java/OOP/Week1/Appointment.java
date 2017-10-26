@@ -1,4 +1,4 @@
-package Java.OOP;
+package Java.OOP.Week1;
 
 /**
  * Created by Andrei on 24.10.2017.
