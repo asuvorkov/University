@@ -22,20 +22,20 @@ public class Appointment {
 
     DateTime endingTime(){
         Time newTime = this.dateTime.time.minutesLater(length);
-        Date date = this.dateTime.date;
+        Date newDate = this.dateTime.date;
         if (this.dateTime.time.hour < newTime.hour){
             int rest = this.dateTime.time.hour - newTime.hour;
-            date = new Date(this.dateTime.date.day + rest, this.dateTime.date.month, this.dateTime.date.year);
+            newDate = new Date(this.dateTime.date.day + rest, this.dateTime.date.month, this.dateTime.date.year);
         }
-        DateTime output = new DateTime(date, newTime);
+        DateTime output = new DateTime(newDate, newTime);
         return output;
     }
 
     public static void main(String[] args){
         Date d = new Date(13,11,2018);
-        Time t = new Time(12,59,15);
+        Time t = new Time(23,59,15);
         DateTime dt = new DateTime(d,t);
-        Appointment ap = new Appointment(dt,12000,"Zahnarzt","Burgstraße 4");
+        Appointment ap = new Appointment(dt,12,"Zahnarzt","Burgstraße 4");
         System.out.println(ap.endingTime());
     }
 }
