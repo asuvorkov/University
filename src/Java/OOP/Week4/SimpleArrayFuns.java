@@ -10,8 +10,8 @@ public class SimpleArrayFuns {
   }
 
   static boolean contains(int[] xs,int y){
-    for (int i = 0; i < xs.length; i++){
-      if (xs[i] == y){
+    for (int x : xs) {
+      if (x == y) {
         return true;
       }
     }
@@ -19,8 +19,8 @@ public class SimpleArrayFuns {
   }
   static long sum(int[] xs){
     long sum = 0;
-    for (int i = 0; i < xs.length; i++){
-      sum += xs[i];
+    for (int x : xs) {
+      sum += x;
     }
     return sum;
   }
