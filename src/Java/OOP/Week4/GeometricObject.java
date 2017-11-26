@@ -5,18 +5,18 @@ package Java.OOP.Week4;
  */
 public class GeometricObject {
   Vertex corner;
-  double width;
-  double height;
+  public double width;
+  public double height;
   Vertex velocity;
 
-  GeometricObject(Vertex corner, double width, double height, Vertex velocity) {
+  public GeometricObject(Vertex corner, double width, double height, Vertex velocity) {
     this.corner = corner;
     this.width = width;
     this.height = height;
     this.velocity = velocity;
   }
   //Hier jetzt die Methoden implementieren!
-  double size(){
+  public double size(){
     return this.width * this.height;
   }
   boolean isLargerThan(GeometricObject that){

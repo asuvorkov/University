@@ -10,7 +10,7 @@ public class Date {
   int month;
   int year;
 
-  Date(int d, int m, int y) {
+  public Date(int d, int m, int y) {
     day = d;
     month = m;
     year = y;
@@ -18,7 +18,7 @@ public class Date {
     assert month <= 12 && month >= 1 : " Not valid month";
   }
 
-  int dayOfWeek(){
+  public int dayOfWeek(){
     //hier den Wochentag berechnen
     if (month < 3) year = year - 1;
     int a = (int) floor(2.6 * ((month + 9) % 12 + 1) - 0.2);

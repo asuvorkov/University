@@ -8,7 +8,7 @@ public class DateEaster {
   int month;
   int year;
 
-  DateEaster(int d, int m, int y) {
+  public DateEaster(int d, int m, int y) {
     day = d;
     month = m;
     year = y;
@@ -16,7 +16,7 @@ public class DateEaster {
     assert month <= 12 && month >= 1 : " Not valid month";
   }
 
-  DateEaster easter(){
+  public DateEaster easter(){
     //hier den Ostersonntag berechnen
     int a = this.year % 19;
     int b = this.year / 100;
