@@ -1,4 +1,4 @@
-package Java.OOP.Week6;
+package Java.OOP.Week6.GeometricObject;
 
 public class Play extends Gapplication {
   public Play() {

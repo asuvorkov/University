@@ -1,4 +1,4 @@
-package Java.OOP.Week6;
+package Java.OOP.Week6.GeometricObject;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

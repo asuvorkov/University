@@ -1,4 +1,4 @@
-package Java.OOP.Week6;
+package Java.OOP.Week6.IsoscelesTriangle;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;

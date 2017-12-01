@@ -1,11 +1,7 @@
-package Java.OOP.Week6;
+package Java.OOP.Week6.IsoscelesTriangle;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
-/**
- * Created by Andrei on 29.11.2017.
- */
 public class GeometricObject {
   Vertex corner;
   double width;
@@ -13,7 +9,7 @@ public class GeometricObject {
   Vertex velocity;
 
   public GeometricObject(Vertex corner, double width,
-                         double height, Vertex velocity) {
+      double height, Vertex velocity) {
     super();
     this.corner = corner;
     this.width = width;
@@ -21,10 +17,19 @@ public class GeometricObject {
     this.velocity = velocity;
   }
 
+  public void paintMeTo(GraphicsContext gc) {    
+    gc.fillRect(corner.x, corner.y, width, height); 
+  }
+
+  public void move() {
+    corner.x += velocity.x;
+    corner.y += velocity.y;
+  }
+
   double size(){
     return width*height;
   }
-
+  
   boolean isLargerThan(GeometricObject that){
     return size()>that.size();
   }
@@ -44,19 +49,9 @@ public class GeometricObject {
     return !(isLeftOf(that)||isRightOf(that)
         ||isAbove(that)||isUnderneath(that));
   }
-  void move(){
-    corner.move(velocity);
-  }
+
   @Override
   public String toString() {
-    return "Geo("+corner+","+width+","+height+","+velocity+")";
-  }
-
-  public void paintMeTo(GraphicsContext gc) {
-    //TODO.
-    //Paint the rectangle to the FX Graphics Content
-    gc.setFill(Color.YELLOW);
-    gc.fillRect(100, 100, 200, 200);
-    gc.strokeRect(100, 100, 200, 200);
+     return "Geo("+corner+","+width+","+height+","+velocity+")";
   }
 }

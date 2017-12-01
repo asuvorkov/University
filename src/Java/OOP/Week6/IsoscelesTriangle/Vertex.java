@@ -1,4 +1,4 @@
-package Java.OOP.Week6;
+package Java.OOP.Week6.IsoscelesTriangle;
 
 public class Vertex {
   double x;
@@ -27,6 +27,6 @@ public class Vertex {
     if (obj==null) return false;
     if (!obj.getClass().equals(Vertex.class)) return false;
     Vertex that = (Vertex)obj;
-    return (int)that.x==(int)this.x &&  (int)that.y==(int)this.y;
+    return Math.abs((int)that.x-(int)this.x)<=1 &&  Math.abs((int)that.y-(int)this.y)<=1;
   }  
 }
