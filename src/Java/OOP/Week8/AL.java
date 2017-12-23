@@ -9,6 +9,13 @@ import java.util.function.Predicate;
  */
 public class AL<E> implements List<E> {
   public static void main(String[] args){
+    AL test = new AL();
+    test.insert(0, 1);
+    for (int i = 0; i < test.size; i++){
+      System.out.print(test.get(i) + "  ");
+    }
+    System.out.println("size ---> " + test.size);
+
     AL test1 = new AL<>(5, 6, 3, 1);
     test1.remove(1);
     for (int i = 0; i < test1.size; i++){
@@ -90,10 +97,10 @@ public class AL<E> implements List<E> {
 
   @Override
   public void insert(int i, E e) {
-    if (i >= size){
+    if (i >= size || size == 0){
       this.add(e);
     }
-    if (i > -1 && i < size){
+    if (i > 0 && i < size){
       this.add(e);
       System.arraycopy(store, i, store, i + 1, size - i);
       store[i] = e;
@@ -113,7 +120,8 @@ public class AL<E> implements List<E> {
   @Override
   public boolean containsWith(Predicate<E> pred) {
     for(int i = 0; i < size; i++){
-      if (store[i].getClass() == pred.getClass()){
+      E e = store[i];
+      if (pred.test(e)){
         return true;
       }
     }
@@ -132,7 +140,8 @@ public class AL<E> implements List<E> {
   @Override
   public void forEach(Consumer<? super E> consumer) {
     for (int i = 0; i < size; i++){
-      store[i] = (E) consumer;
+      E e = store[i];
+      consumer.accept(e);
     }
   }
 
@@ -166,7 +175,20 @@ public class AL<E> implements List<E> {
 
   @Override
   public void sortBy(Comparator<? super E> cmp) {
-
+    int l = size;
+    E temp;
+    for (int i = 0; i < l; i++){
+      for(int j = 1; j < (l - i); j++){
+        E e1 = store[j - 1];
+        E e2 = store[j];
+        if(cmp.compare(e1, e2) > 0){
+          //swap elements
+          temp = store[j-1];
+          store[j-1] = store[j];
+          store[j] = temp;
+        }
+      }
+    }
   }
 
   public int size() {
