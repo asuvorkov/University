@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lecture>
+<title>FX-Umsetzung der Spielebibliothek</title>
+<docent>Sven Eric Panitz</docent>
+<preface>In diesem Papier wird die Umsetzung der Spielerahmenbibliothek in Javas FX-Bibliothek beschrieben</preface>
+
+
+
+<content>
+<paragraph>
+<title>Einbinden der Bibliothek</title>
+Es gibt bisher keine kluge und automatische Einbindung der Bibliothek in die verschiedenen Realisierungen. Die Quellen müssen manuell zusammen in ein Projekt kopert werden.
+
+Wir gehen davon aus, dass ein Spiel in einer Entwicklungsumgebung (eclipse, intelliJ) entwickelt werden soll. So wird der einfachste Weg sein, in der Entwicklungsumgebung Projekt anzulegen. Dann die Quelltexte der Rahmenbibliothek in das Projekt zu kopieren. Dann die Quelltexte der JavaFX-Realisierung in das Projekt zu kopieren. Bild- und Klang-Dateien können in eclipse in den Quelltextordner <tt>src</tt> kopiert werden. Zum Testen, ob das Projekt korrekt aufgesetzt wurde, empfielt es sich, das in der Bibliothek enthaltene Spiel <tt>SimpleGame</tt> zu kompilieren und zu starten.
+
+Als <tt>SoundTool</tt> in der JavaFX Umsetzung wird die Klasse für Klänge aus der Swing-Umsetzung verwendet. Daher ist die Klasse <br/>
+<tt>name.panitz.game.framework.swing.JavaSoundTool</tt> aus der Swing-Umsetzung auch zu den Quelltexten zu kopieren.
+
+Es spricht nichts dagegen, in dem Projekt nicht nur die Bibliothek der FX-Realisierung sondern auch die Klassen der Swing-Realisierung zu kopieren und in dem Projekt sowohl das Spiel für swing als auch für javafx zu kompilieren und zu starten.
+
+
+Um ein Spiel in der FX-Umsetzung zu starten, ist eine Unterklasse der folgenden Klasse mit dem korrekten super-Aufruf für das eigene Spiel zu implementieren:<br />
+<tt>name.panitz.game.framework.fx.GameApplication</tt>.
+
+</paragraph>
+
+
+  <paragraph>
+<title>Die FX-Umsetzung</title>
+
+
+<paragraph>
+  <title>Zeichnen der Komponenten</title>
+  <importSource file="src/name/panitz/game/framework/fx/FXContextTool.java"/>
+</paragraph>
+
+<paragraph>
+  <title>Das Spielfeld</title>
+  <importSource file="src/name/panitz/game/framework/fx/FXScreen.java"/>
+</paragraph>
+<paragraph>
+  <title>Die Einstiegsklasse</title> 
+    <importSource file="src/name/panitz/game/framework/fx/GameApplication.java"/>
+</paragraph>
+
+ 
+</paragraph>
+
+</content>
+</lecture>

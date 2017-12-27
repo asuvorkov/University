@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lecture>
+<title>Android-Umsetzung der Spielebibliothek</title>
+<docent>Sven Eric Panitz</docent>
+<preface>Dieses Papier beschreibt die Android-Umsetzung des Spielebibliothek. Dieses ist die jüngste Umsetzung und auf Grund der unterschiedlichen Endgeräte die problematischste. Einige Ungereimtheiten finden sich noch in der Umsetzung, aber es sollte möglich sein, die Spiele auch für Android bereit zu stellen.
+</preface>
+
+<content>
+  <paragraph>
+    <titel>Ein Android Spieleprojekt Erzeugen</titel>
+    Es gibt derzeit kein automatisches Skript, um ein Projekt für Android zu erzeugen. Aber es sollte reletiv einfach möglich sein, ein Projekt mit Hilfe der Entwicklungsumgebung Android-Studio mit leerer Activity zu erzeugen.
+
+    Hierzu ist in Android-Studio ein neues Projekt zu erzeugen. Als erstes ist die Entwicklungsumgebung für das Projekt so einzustellen, dass Java 8 Quelltext verarbeitet werden kann. Hierzu ist  der Menupunkt Project-Structure auszuwählen (auch mit ›Strg-Alt-Umsch S‹ zu erreichen). Hier sind für Quell- und Zielkompatibilität die Java Version 1.8 zu wählen.
+
+    Anschließend die Quelltexte der Rahmenbibliothek und die Quelltexte der Android-Umsetzung in das Projekt in den Java-Quelltextorder kopieren.
+
+    Die Bilddateien für das Spiel landen in den Ordner <tt>res/drawable</tt> und die Klangdateien schließlich in den Ordner <tt>res/raw</tt>. Dieser ist im Projekt erst noch anzulegen.
+
+    Dann ist natürlich auch der Quelltext des eigenen Spiels in das Projekt zu kopieren. Als letzter Schritt ist die bei Projekterzeugung generierte Klasse <tt>MainActivity</tt> durch eine Implementierung entsprechend dem Beispiel am Ende dieses papiers abzuändern. Sie muss dann die Klasse <tt>GameActivity</tt> erweitern und im <tt>super</tt>-Konstruktoraufruf eine Instanz des eigenen Spiels übergeben.
+
+    Nun sollte sich die Android Applikation kompilieren und starten lassen.
+  </paragraph>
+      
+
+  <paragraph>
+    <title>Die Android-Umsetzung</title>
+    Dieses kapitel beschäftigt sich mit der Umsetzung des Rahmenbibliothek auf Android. Dieses ist die jüngste Umsetzung, da es erst relativ spät möglich war, in der Entwicklung von Android-Applikationen auch Java 8 Quelltext zu verwenden.
+<paragraph>
+  <title>Das Zeichenwerkzeug</title>
+  Jede Umsetzung der Bibliothek brauch zunächst eine Implementierung der Schnittstelle <tt>GraphicsTool</tt> für die entsprechende Plattform. Hierbei wir der in der Rahmenbibliothek als generischer Typ offen gelassene Typ der Bilddateien konkretisiert. Im Android Fall entsteht eine Implementierung für Bilder des Android Typs <tt>Bitmap</tt>.
+  <importSource file="app/src/main/java/name/panitz/game/framework/android/AndroidGraphicsTool.java"/>
+
+  In dieser Klasse wird nicht nur das Zeichnen der Objekte umgesetzt, sondern auch das Laden der Resourcen. Es wird dabei davon ausgegangen, dass die Bilddateien Projekt-konkorm im Ordner <tt>res/drawable</tt> liegen. Leider muss man bei der Andoid-Umsetzung auf die Animation von animierten gif-Dateien verzichten, da Android diese nicht unterstützt. 
+</paragraph>
+
+<paragraph>
+  <title>Klänge</title>
+  Ebenso, wie das Zeichnen von Grafiken, ist das Abspielen (und Laden) von Klängen in jeder Umsetzung spezifisch durch Implementieren der entsprechenden Schnittstelle unzusetzen. Auch hier wird der in der Rahmenbibliothek durch eine Typvariable in generischen Typen offen gehaltene Typ der Klangdateien für die Umsetzung konkretisiert. Im Android Fall entsteht ein <tt>SoundTool&lt;MediaPlayer&gt;</tt>.
+  <importSource file="app/src/main/java/name/panitz/game/framework/android/AndroidSoundTool.java"/>
+</paragraph>
+<paragraph>
+  <title>Spielansicht und Schleife</title>
+  Gezeichnet wird auf einem <tt>Canvas</tt>-Objekt, das zu einem <tt>SurfcaeView</tt>-Objekt gehört. Die Hauptspielschleife wird als <tt>Runnable</tt> realisiert.  
+ 
+  <importSource file="app/src/main/java/name/panitz/game/framework/android/Screen.java"/>
+</paragraph>
+
+<paragraph>
+  <title>Die Hauptaktivität</title>
+  Um die Spieleansicht in eine Spielaktivität zu kapseln, bedarf es noch einer Steuerung und auch die im Spiel vorhanden Knöpfen sind der Applikation hinzuzufügen.
+  
+  <importSource file="app/src/main/java/name/panitz/game/framework/android/GameActivity.java"/>
+</paragraph>
+
+<paragraph>
+  <title>Steuerung mit Fingergesten</title>
+  Wir haben keine Tastatur und wollen auch nicht, dass das Spiel mit einer aufklappenden Tastatur auf dem Bildschirm gesteuert wird. Deshalb setzt die Android-Umsetzung einige wichtige  Tasten durch Wischgesten auf dem Bildschirm um. Dieses sind vorerst die vier Pfeiltasten und die Leertaste.
+  
+  <importSource file="app/src/main/java/name/panitz/game/framework/android/CustomGestureDetector.java"/>
+</paragraph>
+ 
+<paragraph>
+  <title>MainActivity zum Starten eines Spiels</title>
+  Hier ein kleines Beispiel, wie man sein Spiel in der Android-Umsetzung einbindet und gestartet bekommt-
+  <importSource file="app/src/main/java/name/panitz/MainActivity.java"/>
+</paragraph>
+
+</paragraph>
+</content>
+</lecture>

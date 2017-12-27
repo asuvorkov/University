@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lecture>
+<title>Swing-Umsetzung der Spielebibliothek</title>
+<docent>Sven Eric Panitz</docent>
+<preface>In diesem Papier wird die Umsetzung der Spielerahmenbibliothek in Javas Swing-Bibliothek beschrieben</preface>
+
+<content>
+<paragraph>
+<title>Einbinden der Bibliothek</title>
+Es gibt bisher keine kluge und automatische Einbindung der Bibliothek in die verschiedenen Realisierungen. Die Quellen müssen manuell zusammen in ein Projekt kopert werden.
+
+Wir gehen davon aus, dass ein Spiel in einer Entwicklungsumgebung (eclipse, intelliJ) entwickelt werden soll. So wird der einfachste Weg sein, in der Entwicklungsumgebung Projekt anzulegen. Dann die Quelltexte der Rahmenbibliothek in das Projekt zu kopieren. Dann die Quelltexte der Swing-Realisierung in das Projekt zu kopieren. Bild- und Klang-Dateien können in eclipse in den Quelltextordner <tt>src</tt> kopiert werden. Zum Testen, ob das Projekt korrekt aufgesetzt wurde, empfielt es sich, das in der Bibliothek enthaltene Spiel <tt>SimpleGame</tt> zu kompilieren und zu starten.
+
+Es spricht nichts dagegen, in dem Projekt nicht nur die Bibliothek der Swing-Realisierung sondern auch die Klassen der javafx-Realisierung zu kopieren und in dem Projekt sowohl das Spiel für swing als auch für javafx zu kompilieren und zu starten.
+
+
+In der Klasse <tt>SwingGame</tt> gibt es folgende statische Methode, mit der ein Spiel in einem Fenster angezeigt und gestartet wird:<br />
+<tt>public static void startGame(GameLogic&lt;Image&gt; game)</tt>
+</paragraph>
+
+<paragraph>
+<title>Die Swing-Umsetzung</title>
+Jede Umsetzung der Spielebibliothek muss Implementierungen der Schnittstellen auf die die Bibliothek verweist, beinhalten. Dieses sind auf jedem Fall das <tt>GrphicsTool</tt> und das <tt>SoundTool</tt>. Dann muss es eine Klasse geben, in dem das Spiel in einem Fensterinhalt angezeigt wird und eine zeitgesteuerte SChleife beinhaltet, die die Animation realsiert.
+
+
+<paragraph>
+  <title>Zeichnen der Grafiken</title>
+  Swing verwendet zum Zeichnen auf dem Bildschirm die Klasse <tt>java.awt.Grphics</tt>. Die von dem <tt>GraphicsTool</tt> erwartete Funktionalität wird in dieser Umsetzung entsprechend für diese awt-Klasse umgesetzt.
+  <importSource file="src/name/panitz/game/framework/swing/SwingGraphicsTool.java"/>
+</paragraph>
+
+<paragraph>
+  <title>Klänge</title>
+  Es gibt verschiedene Wege, um in Java Klänge abzuspielen. Wir verwenden die Klassen aus dem Paket <tt>javax.sound.sampled</tt> um Klänge abzuspielen. 
+  <importSource file="src/name/panitz/game/framework/swing/JavaSoundTool.java"/>
+</paragraph>
+<paragraph>
+  <title>Anzeige des Spiels und Zeitschleife</title>
+  Um das Spiel anzuzeigen und zu animieren wird die swing-Standardklasse <tt>JPanel</tt> verwendet. Es wird eine Unterklasse definiert. In dieser wird die Methode <tt>paintComponent</tt> so überschrieben, dass die Spielobjekte auf dem Bildschirm gezeichnet werden.
+
+  Sie Klasse enthält ein swing-Timer Objekt. Dieses steuert die Animation und ruft in wiederkehrenden Abständen die Methoden zum Bewegen der Spielobjekte auf.
+
+  <importSource file="src/name/panitz/game/framework/swing/SwingScreen.java"/>
+</paragraph>
+
+ 
+<paragraph>
+  <title>Zusätzlich Knöpfe für das Spiel</title>
+  Zusätzlich gibt es die Möglichkeit für ein Spiel noch Knöpfe zu definieren. Hierfür wird eine weitere GUI-Komponente definiert. Auch diese ist Unterklasse der Klasse <tt>JPanel</tt>. Sie bündelt die eigentliche Spielleinwand und die Knöpfe zu einer integrierten GUI-Komponente. 
+  
+    <importSource file="src/name/panitz/game/framework/swing/SwingGame.java"/>
+
+    Diese Klasse enthält zusätzlich eine statische Methode, um ein konkretes Spiel direkt in swing zu starten.
+</paragraph>
+
+</paragraph>
+</content>
+</lecture>

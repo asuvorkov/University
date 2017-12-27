@@ -1,0 +1,1 @@
+Feel free to add your games created with the framework into this folder.

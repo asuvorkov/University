@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lecture>
+<title>Ein kleine Rahmenbibliothek für Spiele im 2-dimensionalen Raum</title>
+<docent>Sven Eric Panitz</docent>
+<preface>Zum Abschluss des Moduls »Objektorientierte Softwareentwicklung« steht ein kleines Spieleprojekt, das in Einzelarbeit zu lösen ist. 
+
+
+Dieses Papier stellt zusammen mit der Projektaufgabe eine kleine Rahmenbibliothek vor, unter deren Benutzung das Spieleprojekt zu realisieren ist.  Einige Klassen aus den bisherigen Übungsblättern finden in dieser Bibliothek Verwendung.   Die Rahmenbibliothek erlaubt es, Spiele unabhängig für die GUI-Plattformen Java-Swing, JavaFX, als Browserspiel mit Hilfe von GWT und als Android Applikation zu entwickeln. 
+</preface>
+
+<content>
+<paragraph>
+<title>Das Spieleframework</title>
+Die Bibliothek erlaubt es Spiele zu entwickeln, die auf einer zweidimensionalen Spielfläche laufen. Es gibt Spielfiguren, die sich selbstständig bewegen, Spielfiguren, die durch Benutzereingaben gesteuert werden können und Spielelemente, die unbewegt das Spielfeld definieren.
+
+<paragraph>
+<title>Schnittstellen für Spielobjekte</title>
+Wir stellen zunächt drei Schnittstellen vor, die ausdrücken, dass Spielfiguren Bewegungsschritte durchführen können und dass Spielfiguren sich grafisch darstellen lassen.
+
+
+<paragraph>
+<title>Allgemeine Klassen und Schnittstellen</title>
+Für die Bewegung ist die Schnittstelle <tt>Moveable</tt> zuständig:
+
+<importSource file="src/name/panitz/game/framework/Moveable.java"/>
+
+Die Schnittstelle <tt>Paintable</tt> drückt aus, dass ein Objekt sich grafisch darstellen kann:
+
+<importSource file="src/name/panitz/game/framework/Paintable.java"/>
+
+Diese Schnittstelle ist generisch gehalten über den Typ der Bildobjekte.<p/>
+
+Anders als im Verlauf der Vorlesung bekommt die Methode <tt>paintMeTo</tt> der Schnittstelle als Parameter kein Objekt der Java FX Klasse <tt>javafx.scene.canvas.GraphicsContext</tt> übergeben, sondern ein Objekt der allgemeiner konzipierten Schnittstelle <tt>GraphicsTool</tt>. 
+Diese Schnittstelle wird in mehreren Implementierungen für die verschiedenen GUI-Frameworks vorliegen. Da die unterschiedlichen GUI Frameworks ganz unterschiedliche Klassen für die Bereitstellung von Bilddateien haben, halten wir in dieser Schnittstelle den eigentlichen Typ für Bilddateien variable. Daher ist die Schnittstelle generisch. Sie hat eine Typvariable <tt>I</tt>, die für den Typ der konkreten Bilddateien steht. Ansonsten hat die Schnittstelle die üblichen Methoden, um Vierecke und Kreise zu zeichnen und eine Methode um Bilddateien zu zeichnen. <p/>
+
+<importSource file="src/name/panitz/game/framework/GraphicsTool.java"/>
+
+Zur Darstellung von Punkten im zweidimensionalen Raum wurden bereits auf einem Übungsblatt die Klasse <tt>Vertex</tt> entwickelt.
+
+<importSource file="src/name/panitz/game/framework/Vertex.java"/>
+
+</paragraph>
+<paragraph>
+<title>Abstrakte Spieleobjekte</title>
+Als zentrale Klasse für unsere Spielobjekte wurde im Verlauf der Vorlesung die Klasse <tt>GeometricObject</tt> entwickelt. In diesem Framework ist statt der Klasse <tt>GeometricObject</tt> eine Schnittstelle <tt>GameObject</tt> vorgegeben. Diese Schnittstelle gibt vor, dass es Getter- und Setter-Methoden, für die vier Felder, die  aus der Klasse <tt>GeometricObject</tt> bekannt sind, gibt. Die aus <tt>GeometricObject</tt> bekannten Methoden, die mit den vier Feldern der Klasse arbeiten, finden sich in dieser Schnittstelle als default-Methoden wieder.
+
+Zusätzlich enthält die Schnittstelle eine Methode, die es erlauben soll, Bildobjekte zu erzeugen. Aus diesem Grund ist auch diese Schnittstelle generisch über den Typ der Bilddateien.
+
+<importSource file="src/name/panitz/game/framework/GameObject.java"/>
+
+Zum Generieren der Bildobjekte werden die drei Frameworks eine spezielle Klasse benötigen. Auch hierfür wird eine Schnittstelle vorgesehen. Sie sieht eine Methode vor, die ein Bildobjekt für den Dateinamen einer Bilddatei erzeugt.
+
+
+
+Die Schnittstelle <tt>GameObject</tt> wird in den meisten Eigenschaften bereits in einer abstrakten Klasse umgesetzt.
+
+<importSource file="src/name/panitz/game/framework/AbstractGameObject.java"/>
+
+</paragraph>
+
+<paragraph>
+<title>Konkrete Spielobjekte</title>
+Wir geben in diesem Abschnitt zwei konkrete Klassen, die Spieleobjekte realisieren. Diese können direkt bei der Entwicklung eines Spieles verwendet werden, oder durch Erweiterungen in Unterklassen spezialisiert werden.
+
+<paragraph>
+<title>Bildobjekte</title>
+Die folgende Klasse basiert auf einer Bilddatei. Es ist dafür zu sorgen, dass für die unterschiedlichen Realisierungen, auf denen die Spielebibliothek portiert ist, die Bilddateien in den korrekten Ordner gelegt wird. Näheres findet sich hierzu in den Beschreibungen der Implementierungen. Bei der swing- und der fx-Realisierung muss dieser Ordner im Klassenpfad des fertigen Spiels liegen, d.h. dort, wo auch die <tt>.class</tt>-Dateien liegen.<p />
+
+Die Dimensionen in Weite und Höhe des Spielobjektes wird durch die Größe der Bilddatei bestimmt.
+
+<importSource file="src/name/panitz/game/framework/ImageObject.java"/>
+
+</paragraph>
+<paragraph>
+  <title>Bildobjekte mit Schwerkraft</title>
+  In vielen Spielen gibt es Spielfiguren, die fallen und springen. Hier brauchen wir ein wenig Ahnung über die Schwerkraft. Eine Unterklasse von <tt>ImageObject</tt> realsiert bereits Bildobjekte, die die Bewegung auf Sprünge implementiert hat.
+  
+  <importSource file="src/name/panitz/game/framework/FallingImage.java"/>
+  </paragraph>
+
+<paragraph>
+<title>Textobjekte</title>
+Die zweite Klasse, die für konkrete Spielobjekte direkt verwendet werden kann, repräsentiert Objekte, die sich durch einen Text darstellen. Diese sind für feste textanzeigen im Spiel geeignet.
+
+
+<importSource file="src/name/panitz/game/framework/TextObject.java"/>
+
+</paragraph>
+</paragraph>
+</paragraph>
+
+<paragraph>
+<title>Das allgemeine Framework</title>
+In diesem Abschnitt folgen die Klassen, die die Eigenschaften eines  Spiels beschreiben. Auch hier beginnen wir mit der Definition einer Schnittstelle.
+
+<paragraph>
+<title>Zentrale Spielschnittstelle</title>
+
+Die Schnittstelle <tt>GameFramework</tt> beschreibt, was ein Spiel für einen generellen Aufbau hat. Wie alle anderen Klassen ist auch diese generisch gehalten über den Typ der Bilddateien.
+ 
+
+<importSource file="src/name/panitz/game/framework/GameLogic.java"/>
+
+
+Wie man sieht, wird verlangt, dass das Spiel sich selbst wieder komplett zeichnen lassen kann, dadurch dass die Schnittstelle <tt>Paintable</tt> erweitert wird.<p />
+
+Wir gehen davon aus, dass ein Spiel genau einen Spieler hat, der durch den Benutzer über die Tastatur gesteuert wird.  Dieser Spieler kann von einem Spiel per <tt>getPlayer</tt> erfragt werden.<p />
+
+Desweiteren gehen wir davon aus, dass es mehrere inhaltlich unterschiedliche Spielobjekte gibt. Diese werden in eigenen Listen gehalten. Alle Spielobjekte sind schließlich in einer Liste von Listen gesammelt. Diese kann mit der Methode <tt>getOGoss()</tt> erfragt werden.<p />
+
+Ein Spiel kann auch nach seiner Höhe und Breite gefragt werden können.<p />
+
+Die Methode <tt>doChecks</tt> soll einen einzigen Spielschritt des Spiels durchführen. Es wird einen Ticker geben und pro Tick wird das Spiel  um einen Schritt weiterbewegt. Jedes bewegliches Spielobjekt nimmt dann genau einen Schritt mit seiner Bewegung vor. Dieses realisiert die Methode <tt>move()</tt>.<p />
+
+Nach jedem Schritt finden Checks für das Spiel statt. Hier wird auf Kollisionen getestet und eventuell auf Grund einer Kollision der Spielzustand verändert, indem  eventuell Spielobjekte gelöscht werden, oder Punktestände verändert werden. Hier befindet sich zumeist die komplette Spiellogik umgesetzt.<p />
+
+Das Spiel soll angeben, ob es noch aktiv ist, oder gestoppt wurde. Gestoppte Spiele werden nicht mehr bewegt.<p />
+
+Da sicher alle Spiele intern ein Feld für den Spieler und ein Feld für die Liste von Listen von Spielobjekten benötigt, implementieren wir jetzt eine abstrakte Klasse, die quasi ein leeres Spiel repräsentiert.
+
+
+<importSource file="src/name/panitz/game/framework/AbstractGame.java"/>
+
+Spiele können nun als Unterklasse dieser abstrakten Klassen umgesetzt werden.
+</paragraph>
+
+<paragraph>
+  <title>Klänge</title>
+  Die kleine Bibliothek soll auch ermöglichen kleine Klänge bei Spielereignissen abzuspielen. Hierzu ist eine kleine Klasse vorgesehen, die im Konstruktor den Dateinamen eines Klangdatei übergeben bekommt. Da die verschiedenen Umsetzungen der Bibliothek mit unterschiedlichen Klassn für Klänge arbeiten, ist die Klasse generisch gehalten und hat einen Typparameter <tt>S</tt> für <em>sound</em>.
+  
+  <importSource file="src/name/panitz/game/framework/SoundObject.java"/>
+
+  Die allgemeine Spielschnittstelle enthält eine Methode<br />
+  <tt><![CDATA[List<SoundObject<S>> getSoundsToPlayOnce();]]></tt>.<br />
+  Objekte die dieser Liste zugefügt werden, werden bei nächster Gelegenheit im Spiel genau einmal abgespielt.
+
+Ähnlich wie wir eine Schnittstelle für das Zeichnen von Objekten vorgesehen haben, stellt die Rahmenbibliothek eine Schnittstelle für das Laden und Abspielen von klängen bereit. Diese Schnittstelle wird in den unterschiedlichen Umsetzungen jeweils spezifisch implementiert, wobei die Swing-Umsetzung und die javafx-Umsetzung dort auf dieselbe Implementierung zurückgreifen können.
+  
+  <importSource file="src/name/panitz/game/framework/SoundTool.java"/>
+</paragraph>
+
+<paragraph>
+  <title>Knöpfe</title>
+  Globale Knöpfe können für ein Spiel definiert werden. Diese können zu einem Neustart führen, oder das Spiel anhalten, aber wenn es gewünscht ist, auch ins Spielgeschehen eingreifen. Die entsprechende Klasse ist sehr simpel gehalten. Sie enthält eine Zeichenkette für die beschriftung des Knopfes und ein Objekt der funktionalen Schnittstelle <tt>Runnable</tt> für die Aktion, die bei einem Knopfdruck ausgeführt werden soll.
+  
+  <importSource file="src/name/panitz/game/framework/Button.java"/>
+
+
+  Die allgemeine Spielschnittstelle enthält eine Methode<br />
+  <tt><![CDATA[List<Button> getButtons();]]></tt>.<br />
+  Objekte die bei Spielstart in dieser Liste sind, werden als Knöpfe dargestellt.  
+</paragraph>
+
+<paragraph>
+<title>Tastaturbehandlung</title>
+Die Schnittstelle <tt>GameLogic</tt> enthält die Methode <tt> keyPressedReaction(KeyCode keycode)</tt>. In dieser ist zu implementieren, wie auf Tastaturereignisse (in diesem Fall das Drücken einer Taste) reagiert wird. Hierzu ist eine Aufzählungsklasse für Tastatur-Codes gegeben. In dieser sind (noch nicht alle) Tasten als Aufzählungswert versehen. Im Beispielspiel des übernächsten Abschnitts kann die Anwendung dieser Aufzählungsklasse gesehen werden. Des Weiteren ist die Methode <tt> keyReleasedReaction(KeyCode keycode)</tt> enthalten. Mit dieser Methode kann auf das loslassen eines Tastendrucks reagiert werden.
+<importSource file="src/name/panitz/game/framework/KeyCode.java"/>
+
+</paragraph>
+</paragraph>
+</paragraph>
+
+<paragraph>
+<title>Kleines Beispiel: Hexe und Bienenstiche</title>
+
+In diesem Kapitel wird ein minimales Beispiel gezeigt, wie mit Hilfe der im ersten Kapitel vorgestellten Bibliothek ein kleines Spiel erzeugt werden kann. 
+
+<paragraph>
+<title>Definition des Beispielspiels</title>
+Als Beispiel für die Anwendung der Bibliothek sei hier ein minimales Spiel angegeben. Spielfigur ist eine Hexe, die auf einem Besen über eine Wiese fliegt. Gegner sind Biene. Berührt die Hexe eine Biene, so wird sie gestochen. Nach 10 Stichen ist das Spiel beendet. <p />
+
+Als Bilddateien für die Hexe werden Zeichnungen von Andreas und Martin Textor verwendet, die im WS06/07 für ein Spiel in der damaligen Vorlesung Java des 3. Semesters im Diplomstudiengang entstanden sind. Das entsprechende Spiel und die Bilddateien sind offiziell auf<p/>
+
+<tt>https://github.com/atextor/witchcraft/tree/master/gfxsrc</tt> <p/>
+
+erhältlich.<p />
+
+ 
+Das Hintergrundbild der Wiese wurde von folgender Quelle bezogen:<p />
+
+<tt>https://pixabay.com/de/wiese-himmel-landschaft-natur-gras-970333/</tt><p />
+
+Wir implementieren das Spiel durch Erwweitern der abstrakten Klasse <tt>AbstractGame</tt>. Es werden Listen für verschiedene Spielobjekte angelegt. Eine Liste für Hintergrundbilder, eine Liste für die Gegner und eine Liste für Wolken, die keinen Einfluss auf das Spiel haben, sondern nur für die Athmosphäre sind.<p />
+
+Ein Text-Objekt für die Spielstandsanzeige wird erzeugt. <p/>
+ 
+Ein weiteres Feld zählt, wieviel Bienen die Hexe bereits gestochen haben.<p />
+
+Im Konstruktor wird zunächst der Oberklasse mit dem Aufruf von <tt>super</tt> die Spielfigur übergeben. Hierfür wird ein Bildobjekt mit dem Bild der Hexe erzeugt.<p />
+
+Dann werden die Liste mit den Gegnerobjekten, die Liste mit den Wolken und die Liste mit den Hintergrundobjekten mit Spielobjekte gefüllt. <p />
+
+Zu guter letzt werden die einzelnen Listen der Liste von Listen <tt>goss</tt> hinzugefügt.<p />
+
+Es bleiben drei Methoden, die zu überschreiben sind:
+<ul>
+<li><tt>doChecks</tt>: hier wird geprüft, ob Bienen und Wolken links außerhalb des Spielfelds sind. Ist dieses der Fall, so werden sie wieder nach rechts gesetzt, so dass sie erneut über das Spielfeld fliegen. Desweiteren wird geprüft, ob eine Biene die Hexe berührt. Wenn ja, wird die Anzahl der Stiche um eins erhöht und die Biene aus dem Spielfeld gesetzt. Die Anzeige wird entsprechend verändert. Der zehnte Stich führt dazu, dass eine Meldung über das Spielende angezeigt wird.
+</li>
+<li><tt>isStopped</tt>: hier wird ab dem 10. Bienenstich <tt>true</tt> zurück gegeben.
+</li>
+<li><tt>keyPressedReaction</tt>: die Pfeiltasten verändern die Bewegungsrichtung der Hexe.
+</li>
+</ul>
+
+<importSource file="src/name/panitz/game/example/simple/SimpleGame.java"/>
+
+Damit ist das kleine Spiel bereits fertig implementiert und kann jetzt auf allen drei Plattformen gespielt werden.
+
+</paragraph>
+<paragraph>
+<title>Swing Instanz des Spieles</title>
+Um das Spiel in Swing zu spielen, muss es einer Instanz der Klasse <tt>SwingScreen</tt> übergeben werden. Dieses ist dann ein <tt>JPanel</tt>, der in einem <tt>JFrame</tt> angezeigt werden kann.
+
+<code  lang="java" class="PlaySwing" package="src/main/java/name/panitz/game/example/simple"><![CDATA[package name.panitz.game.example.simple;
+import name.panitz.game.framework.GameLogic;
+import name.panitz.game.framework.swing.SwingGame;
+
+public class PlaySwing{
+  public static void main(String[] args){
+    SwingGame.startGame(new SimpleGame<>());
+  }
+}]]></code>
+</paragraph>
+<paragraph>
+<title>Java FX Instanz des Spieles</title>
+Um das Spiel in JavaFx zu starten, ist eine Unterklasse der Klasse <tt>GameApplication</tt> zu schreiben. Im Aufruf des Superkonstruktors ist eine Spielinstanz zu übergeben.
+
+<code  lang="java" class="PlayFX" package="src/main/java/name/panitz/game/example/simple"><![CDATA[package name.panitz.game.example.simple;
+
+import name.panitz.game.framework.fx.GameApplication;
+
+public class PlayFX extends GameApplication {
+  public PlayFX(){
+    super(new SimpleGame<>());
+  }
+}]]></code>
+</paragraph>
+
+<paragraph>
+<title>Einstiegsklasse für GWT</title>
+Um das Spiel als Browserspiel zu spielen, ist eine Implementierung der Schnittstelle <tt>EntryPoint</tt> zu schreiben. In der Methode <tt>onModuleLoad</tt> ist eine Instanz des Spiels in einem <tt>GameSrceen</tt>-Objekt einem HTML-Knoten der Webseite, auf dem das Spiel laufen soll, hinzuzufügen. 
+
+
+<code lang="java" class="WebGames" package="src/main/java/name/panitz/game/framework/gwt/client"><![CDATA[package name.panitz.game.framework.gwt.client;
+
+import name.panitz.game.example.simple.SimpleGame;
+
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
+
+public class WebGames implements EntryPoint { 
+  public void onModuleLoad() {
+    RootPanel.get("spiel").add(new GameScreen(new SimpleGame<>()));
+  }
+}]]></code>
+</paragraph>
+
+<paragraph>
+<title>Einstiegsklasse für Android</title>
+Um ein Spiel in Android zu spielen, ist eine Klasse <tt>MainActivity</tt> zu schreiben. Wenn diese von der Klasse <tt>GameActivity</tt> ableitet, so kann die Instanz des zu spielenden Spiels im super-Aufruf des Konstruktors übergeben werden.
+<code lang="java" class="MainActivity" package="name/panitz/game/"><![CDATA[package name.panitz.game.framework.gwt.client;
+package name.panitz.game;
+import name.panitz.game.example.simple.SimpleGame;
+
+import name.panitz.game.framework.android.GameActivity;
+
+public class MainActivity extends GameActivity {
+  public MainActivity() {
+    super(new SimpleGame<>());
+  }
+}]]></code>
+</paragraph>
+</paragraph>
+</content>
+</lecture>

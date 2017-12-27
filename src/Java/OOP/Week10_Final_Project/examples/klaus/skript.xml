@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lecture>
+<title>Heart of Klaus</title>
+<subtitle>Mini Beispiel mit Sprung und Einlesen eines Levels</subtitle>
+<docent>Sven Eric Panitz</docent>
+<preface>Dieser kleine Spielansatz demonstriert, wie man einen Level aus einem String einlesen kann und den Einsatz von fallenden und springenden Spielfiguren,
+</preface>
+
+<content>
+<paragraph>
+<title>Spielfiguren</title>
+
+
+<paragraph>
+  <title>Statische Figuren</title>
+  Dieses Spiel kennt zwar Arten von Spielfiguren, die sich nie bewegen. das sind zum einen Herzen, die von der Spielfigur Klaus einzusammeln sind.
+  <importSource file="src/name/panitz/game/klaus/Heart.java"/>
+  Dann gibt es noch Wände, durch die kein anderes Objekt hindurcch gehen soll.
+  <importSource file="src/name/panitz/game/klaus/Wall.java"/>
+</paragraph>
+
+<paragraph>
+  <title>Fallende Figuren</title>
+  In dem Spiel fallen immer wieder von oben Apfelweinfässer durch die Spielebene. Hierzu gibt es eine eigene Klasse.
+  <importSource file="src/name/panitz/game/klaus/Barrel.java"/>
+
+  Die eigentliche Spielfigur Klaus kann springen und laufen.
+  <importSource file="src/name/panitz/game/klaus/Klaus.java"/>
+</paragraph>
+
+</paragraph>
+<paragraph>
+  <title>Spiellogik</title>
+  Das eigentliche Spiel. Interessant ist hier, dass das Layout des Spielfeldes in einem String codiert ist, und die Spielobjekte entsprechend der Codierung erzeugt werden.
+  
+  <importSource file="src/name/panitz/game/klaus/HeartsOfKlaus.java"/>
+
+  Eine kleine Startklasse, um das Spiel mit der javafx-Umsetzung zu starten.
+  <importSource file="src/name/panitz/game/klaus/PlayFX.java"/>
+</paragraph>
+</content>
+</lecture>
