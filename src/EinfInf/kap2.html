@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Ein Muster fuer HTML 5</title>
+    <link rel="stylesheet" type="text/css" href="common_styles.css" media="screen" />
+    <meta charset="UTF-8" />
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+    <!-- Mehr zu "meta": http://wiki.selfhtml.org/wiki/HTML/Kopfdaten/meta -->
+</head>
+<body>
+Kapitel 2
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+
+<p>
+    Dieses Kapitel beschaeftigt sich mit Verweisen.
+</p>
+
+<!--  *** Unter-Überschrift:  -->
+<sub id="c1">
+    Abschnitt 1
+</sub>
+
+<!--  *** Hier beginnt ein Absatz  -->
+<p>
+    Der Abschnitt 1 beschaeftigt sich hauptsaechlich mit internen Verweisen.
+</p>
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    <a href="#c2">Ich bin ein interner Verweis auf den Abschnitt 2</a>
+</p>
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    <a href="kap2.html" target="_top" >
+        Ich bin ein interner Verweis auf den Anfang dieser Datei
+    </a>
+</p>
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    <a href="#end">
+        Ich bin ein interner Verweis auf das Ende dieser Datei
+    </a>
+</p>
+
+<!--  *** Hier beginnt ein Absatz  -->
+<p>
+    <a href="einleitung.html#cursive">
+        Ich bin ein Verweis auf den Absatz mit dem kursiven Wort in der Einleitung.
+    </a>
+</p>
+
+
+
+<!--  *** Unter-Überschrift:  -->
+<div id="c2">
+    <sub>
+        Abschnitt 2
+    </sub>
+</div>
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    Der Abschnitt 2 beschaeftigt sich hauptsaechlich mit externen Verweisen.
+</p>
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    <a href="#c1">
+        Ich bin ein interner Verweis auf Abschnitt 1
+    </a>
+</p>
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    <a href="https://www.hs-rm.de">
+        Ich bin ein Verweis auf die Homepage der HS RheinMain
+    </a>
+</p>
+<!--  *** www.hs-rm.de  -->
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    <a href="https://www.hs-rm.de/de/fachbereiche/design-informatik-medien/studiengaenge/">
+        Ich bin ein Verweis auf die Studiengaenge des Fachbereichs DCSM
+    </a>
+</p>
+<!--  *** https://www.hs-rm.de/de/fachbereiche/design-informatik-medien/studiengaenge/  -->
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<!--  *** Hier einen Verweis zum Versenden von Mail an sich selbst einfuegen  -->
+<p>
+    <a href="mailto:andrey.suvorkov@gmail.com?Subject=Hello%20again" target="_self">
+        Send email to the developer (please wait a bit before the email window will open)
+    </a>
+</p>
+<!--  *** Hier beginnt ein Absatz  -->
+
+
+<p>
+    <a href="https://validator.w3.org">
+        Ich bin ein Verweis auf den (X)HTML-Validierer des W3C
+    </a>
+</p>
+
+<!--  *** validator.w3.org  -->
+
+<!--  *** Hier beginnt ein Absatz  -->
+
+<p>
+    <a href="ftp://ftp.heise.de/pub/">
+        Ich bin ein Verweis auf den oeffentlichen Bereich des ftp-Servers des Heise-Verlags
+    </a>
+</p>
+<!--  *** ftp.heise.de/pub/  -->
+
+<!--  *** Hier beginnt ein Absatz  -->
+<p>
+    <a href="kap1.html#redback">
+        Ich bin ein Verweis auf redback.gif
+    </a>
+</p>
+
+
+<!--  *** Hier beginnt ein Absatz  -->
+<p>
+    <a href="" target="_top">
+        Ich bin ein interner Verweis auf den Anfang dieser Datei
+    </a>
+</p>
+
+
+<!--  *** Hier beginnt ein Absatz  -->
+<p>
+    <a href="index.html">
+        Ich bin ein Verweis auf das Inhaltsverzeichnis
+    </a>
+</p>
+
+<!--  *** Hier beginnt ein Absatz  -->
+<p>
+    <div id="end">
+        Ich bin das Ende.
+    </div>
+
+
+</body>
+</html>

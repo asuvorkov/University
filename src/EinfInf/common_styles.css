@@ -1,0 +1,77 @@
+/* Hilfreiche CSS-Anweisungen zur Anwendung in Ihrer Aufgabe.
+
+   Sie koennen CSS-Statement (mit dem Muster "property: value")
+   hier abschauen und als Werte des HTML-Attributs "style"
+   punktuell "inline" einbauen.
+
+   Besser ist jedoch, CSS-Anweisungen an einer zentralen Stelle
+   wie in dieser Datei vorzuhalten, und ueber geeignete Selektoren
+   (in CSS) oder geeignete Attribute (insb. "class", "id")
+   von HTML aus wirksam werden zu lassen.
+   Vergeben Sie iggf. entsprechende Attribute an den richtigen Stellen!
+*/
+
+*	{
+    font-family: Helvetica;
+}
+
+/* Nuetzliche Klassen */
+
+.nowrap {
+    white-space: nowrap;
+}
+.left {
+    text-align: left;
+}
+.center {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+.strikeout {
+    text-decoration: line-through;
+}
+
+/* Punktgenaue Wirksamkeit dank IDs: */
+
+#hr1 {
+    margin-left: 0px;
+    width: 100px;
+}
+#hr2 {
+    margin-right: 0px;
+    width: 60%;
+}
+#hr3 {
+    width: 30%;
+    height: 4px;
+}
+
+#kap1 {
+    background-color: lightgreen;
+    /*       margin: -20px;
+            padding: 20px; */
+}
+
+/* Ein Gestaltungsvorschlag fuer Ihre Tabelle:
+   (eigene Varianten erwuenscht, Aktivierung erforderlich)
+*/
+
+table {
+    margin: 20px 0 20px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
