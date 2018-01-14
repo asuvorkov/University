@@ -12,7 +12,7 @@
 */
 
 *	{
-    font-family: Helvetica;
+    font-family: Helvetica, serif;
 }
 
 /* Nuetzliche Klassen */
@@ -36,11 +36,11 @@
 /* Punktgenaue Wirksamkeit dank IDs: */
 
 #hr1 {
-    margin-left: 0px;
+    margin-left: 0;
     width: 100px;
 }
 #hr2 {
-    margin-right: 0px;
+    margin-right: 0;
     width: 60%;
 }
 #hr3 {
