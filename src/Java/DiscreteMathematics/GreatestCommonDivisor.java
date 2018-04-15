@@ -1,4 +1,4 @@
-package Java.Discrete_Mathematics;
+package Java.DiscreteMathematics;
 
 import java.math.BigInteger;
 import java.util.Objects;
