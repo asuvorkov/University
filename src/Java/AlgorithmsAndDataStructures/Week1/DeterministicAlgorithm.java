@@ -12,7 +12,7 @@ public class DeterministicAlgorithm {
     boolean foo = (++y >= 4) && (x-- < 20) && ((y >= 4) || (++x < 10));
     System.out.println(foo ? y-- - --x : y++ + ++x); // result: -11
     /**
-     * not deterministic
+     * deterministic
      */
   }
 }
