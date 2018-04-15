@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 /**
  * Created by Andrei on 16.12.2017.
  */
-public interface List<E> {
+interface List<E> {
   int size();
   E get(int i) ;
   void add(E e);

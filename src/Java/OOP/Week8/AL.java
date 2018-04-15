@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 /**
  * Created by Andrei on 16.12.2017.
  */
-public class AL<E> implements List<E> {
+class AL<E> implements List<E> {
   public static void main(String[] args){
     AL test = new AL();
     test.insert(0, 1);
