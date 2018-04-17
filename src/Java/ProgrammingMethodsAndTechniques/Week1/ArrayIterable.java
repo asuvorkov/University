@@ -6,9 +6,9 @@ import java.util.Iterator;
  * Created by Andrei on 17.04.2018.
  */
 public class ArrayIterable<A> implements Iterable<A> {
-  A[] as;
+  private A[] as;
 
-  ArrayIterable(A[] as){
+  private ArrayIterable(A[] as){
     this.as = as;
   }
 
