@@ -7,10 +7,10 @@ import java.util.Objects;
  * Created by Andrei on 18.04.2018.
  */
 public class Lines implements Iterable<String> {
-  static String NEW_LINE = System.getProperty("line.separator");
-  String s;
+  private static String NEW_LINE = System.getProperty("line.separator");
+  private String s;
 
-  public Lines(String str){
+  Lines(String str){
     this.s = str;
   }
 
