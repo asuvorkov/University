@@ -1,4 +1,4 @@
-package Java.ProgrammingMethodsAndTechniques.Week1;
+package Java.ProgrammingMethods.Week1;
 
 import java.util.Iterator;
 import java.util.Objects;

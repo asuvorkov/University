@@ -1,4 +1,4 @@
-package Java.ProgrammingMethodsAndTechniques.Week1;
+package Java.ProgrammingMethods.Week1;
 
 /**
  * Created by Andrei on 17.04.2018.

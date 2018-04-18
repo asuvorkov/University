@@ -1,4 +1,4 @@
-package Java.ProgrammingMethodsAndTechniques.Week1;
+package Java.ProgrammingMethods.Week1;
 
 import java.math.BigInteger;
 import java.util.Iterator;

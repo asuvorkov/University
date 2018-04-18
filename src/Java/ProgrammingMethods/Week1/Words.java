@@ -1,4 +1,4 @@
-package Java.ProgrammingMethodsAndTechniques.Week1;
+package Java.ProgrammingMethods.Week1;
 
 import java.util.ArrayList;
 import java.util.Iterator;

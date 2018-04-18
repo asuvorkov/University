@@ -1,4 +1,4 @@
-package Java.ProgrammingMethodsAndTechniques.Week1;
+package Java.ProgrammingMethods.Week1;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,10 +1,9 @@
-package Java.ProgrammingMethodsAndTechniques.Week1;
+package Java.ProgrammingMethods.Week1;
 
 import static org.junit.Assert.*;
 
 import java.util.Iterator;
 
-import Java.ProgrammingMethodsAndTechniques.Week1.Words;
 import org.junit.Before;
 import org.junit.Test;
 
