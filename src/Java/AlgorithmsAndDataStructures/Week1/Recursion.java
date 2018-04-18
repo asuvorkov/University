@@ -21,6 +21,6 @@ public class Recursion {
     return a + bar(i - 1, a, b);
   }
   public static void main(String[] args) {
-    System.out.println(foo(20, 5));
+    System.out.println(foo(1000, 1000 ));
   }
 }

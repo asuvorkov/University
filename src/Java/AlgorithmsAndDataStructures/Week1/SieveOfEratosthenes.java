@@ -12,7 +12,7 @@ class SieveOfEratosthenes {
       result[a] = true;
     }
 
-    for (int i = 2; i < result.length; i++){
+    for (int i = 2; i < Math.sqrt((double) result.length) + 2; i++){
       if (result[i]){
         for (int j = i * i; j < result.length; j = j + i){
           result[j] = false;
@@ -23,7 +23,7 @@ class SieveOfEratosthenes {
   }
 
   public static void main(String[] args) {
-    boolean[] b = sieve(10000);
+    boolean[] b = sieve(4);
     int count = 0;
     for (int i = 2; i < b.length; i++) {
       if (b[i]){
