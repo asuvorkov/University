@@ -6,7 +6,7 @@ import java.util.Iterator;
  * Created by Andrei on 18.04.2018.
  */
 public class OddIterable extends GenerationIterable<Long> {
-  public OddIterable() {
+  private OddIterable() {
     super((long) 1, aLong -> aLong % 2 == 0 ? aLong++ + 1 : ++aLong + 1);
   }
 
