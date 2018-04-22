@@ -7,9 +7,6 @@ import java.time.ZonedDateTime;
  * Created by Andrei on 21.04.2018.
  */
 public class HasDups {
-  public HasDups(){
-
-  }
   private static boolean hasDups(int[] xs) {
     for (int i = 0; i < xs.length; i++){
       if (linearSearch(xs, i + 1, xs[i])){
