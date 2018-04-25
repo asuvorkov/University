@@ -16,6 +16,10 @@ public class MaxSubArrayQuick {
 
   public static int[] maxSubArray(int[] a) {
     // FIXME: implement
+    if (a.length == 0){
+      return new int[] {-1, -1, Integer.MIN_VALUE};
+    }
+
     int start = 0;
     int end = 0;
     int max = a[0];

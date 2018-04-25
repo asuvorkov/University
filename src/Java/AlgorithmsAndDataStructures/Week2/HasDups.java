@@ -80,7 +80,7 @@ public class HasDups {
 
     int[] array5 = populateArray(1000);
     before = ZonedDateTime.now();
-    System.out.println("Array[1000] -> " + hasDupsFaster(array5));
+    System.out.println("Quick alg Array[1000] -> " + hasDupsFaster(array5));
     after = ZonedDateTime.now();
     duration = Duration.between(before, after);
     System.out.println("took time: " + duration.toMillis() + " millis");
@@ -89,7 +89,7 @@ public class HasDups {
 
     int[] array6 = populateArray(10000);
     before = ZonedDateTime.now();
-    System.out.println("Array[10 000] -> " + hasDupsFaster(array6));
+    System.out.println("Quick alg Array[10 000] -> " + hasDupsFaster(array6));
     after = ZonedDateTime.now();
     duration = Duration.between(before, after);
     System.out.println("took time: " + duration.toMillis() + " millis");
@@ -97,7 +97,7 @@ public class HasDups {
 
     int[] array7 = populateArray(100000);
     before = ZonedDateTime.now();
-    System.out.println("Array[100 000] -> " + hasDupsFaster(array7));
+    System.out.println("Quick alg Array[100 000] -> " + hasDupsFaster(array7));
     after = ZonedDateTime.now();
     duration = Duration.between(before, after);
     System.out.println("took time: " + duration.toMillis() + " millis");
@@ -105,7 +105,7 @@ public class HasDups {
 
     int[] array8 = populateArray(200000);
     before = ZonedDateTime.now();
-    System.out.println("Array[200 000] -> " + hasDupsFaster(array8));
+    System.out.println("Quick alg Array[200 000] -> " + hasDupsFaster(array8));
     after = ZonedDateTime.now();
     duration = Duration.between(before, after);
     System.out.println("took time: " + duration.toMillis() + " millis");
@@ -113,7 +113,7 @@ public class HasDups {
 
     int[] array9 = populateArray(200000000);
     before = ZonedDateTime.now();
-    System.out.println("Array[200 000 000] -> " + hasDupsFaster(array9));
+    System.out.println("Quick alg Array[200 000 000] -> " + hasDupsFaster(array9));
     after = ZonedDateTime.now();
     duration = Duration.between(before, after);
     System.out.println("took time: " + duration.toMillis() + " millis");

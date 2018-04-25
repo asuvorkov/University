@@ -11,8 +11,11 @@ public class MaxSubArray {
    *              a[result[0]] + ... + a[result[1]]
    */
 
-  public static int[] maxSubArray(int[] a) {
+  private static int[] maxSubArray(int[] a) {
     // FIXME: implement
+    if (a.length == 0){
+      return new int[] {-1, -1, Integer.MIN_VALUE};
+    }
     int[] maxSum = new int[3];
     maxSum[2] = Integer.MIN_VALUE;
     for (int i = 0; i < a.length; i++){
@@ -47,7 +50,11 @@ public class MaxSubArray {
   }
 
   public static void main(String[] args) {
+    runTest("C:/Users/Andrei/Desktop/University/src/Java/AlgorithmsAndDataStructures/Week2/maxsubsimple.dat");
+    runTest("C:/Users/Andrei/Desktop/University/src/Java/AlgorithmsAndDataStructures/Week2/maxsub.dat");
+
     int[] a = maxSubArray(new int[] {-31,-41,-59,-26,-53,-58,-97,-93,-23,-84});
+    System.out.println();
     System.out.println("start " + a[0]);
     System.out.println("end " + a[1]);
     System.out.println("sum " + a[2]);
