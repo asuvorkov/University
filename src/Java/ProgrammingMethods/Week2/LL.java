@@ -1,6 +1,7 @@
 package Java.ProgrammingMethods.Week2;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -50,8 +51,8 @@ public class LL<A> implements Li<A> {
 
   @Override
   public void addAll(Collection<? extends A> os) {
-    for ( ;os.iterator().hasNext(); ){
-      this.add(os.iterator().next());
+    for (int i = 0; i < os.toArray().length; i++){
+      this.add((A) os.toArray()[i]);
     }
   }
 
@@ -79,9 +80,10 @@ public class LL<A> implements Li<A> {
 
   @Override
   public void add(A o, int i) {
-    if (i > 0 || i < this.size()){
+    if (i > -1 && i <= this.size()){
       if (i == 0){
-        tl = new LL<>(o, tl);
+        tl = new LL<>(hd, tl);
+        hd = o;
       }else {
         tl.add(o, i - 1);
       }
@@ -90,18 +92,27 @@ public class LL<A> implements Li<A> {
 
   @Override
   public Li<A> sublist(int from, int length) {
+    if (this.size() == 0){
+      return new LL<>();
+    }
+
     if (from < 0){
       from = 0;
     }
+
     if (from > this.size()){
       return null;
     }
+
     if (from + length > this.size()){
       length = this.size();
+    }else {
+      length += from;
     }
+
     Li output = new LL<A>();
-    for ( ; from < length; from++){
-      output.add(this.get(from));
+    for (int i = from ; i < length; i++){
+      output.add(this.get(i));
     }
     return output;
   }
@@ -135,12 +146,14 @@ public class LL<A> implements Li<A> {
 
   @Override
   public void sortBy(Comparator<? super A> comp) {
-
   }
 
   @Override
   public <B> B foldl(B start, BiFunction<B, A, B> op) {
-    return null;
+    for (int i = 0; i < this.size(); i++){
+      start = op.apply(start, this.get(i));
+    }
+    return start;
   }
 
 
