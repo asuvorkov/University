@@ -1,7 +1,6 @@
 package Java.ProgrammingMethods.Week2;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -15,15 +14,15 @@ public class LL<A> implements Li<A> {
   private A hd;
   private LL<A> tl;
 
-  public boolean isEmpty(){
+  private boolean isEmpty(){
     return hd==null&&tl==null;
   }
 
-  public LL(A hd, LL<A> tl) {
+  private LL(A hd, LL<A> tl) {
     this.hd = hd;
     this.tl = tl;
   }
-  public LL() {
+  private LL() {
     this(null,null);
   }
 
@@ -146,6 +145,34 @@ public class LL<A> implements Li<A> {
 
   @Override
   public void sortBy(Comparator<? super A> comp) {
+    if (!this.isEmpty()){
+      A[] array = (A[]) new Object[size()];
+      for(int i = 0; i < array.length; i++){
+        array[i] = this.get(i);
+      }
+
+      A temp;
+      for (int i = 0; i < array.length; i++){
+        for(int j = 1; j < (array.length - i); j++){
+          A e1 = array[j - 1];
+          A e2 = array[j];
+          if(comp.compare(e1, e2) > 0){
+            //swap elements
+            temp = array[j-1];
+            array[j-1] = array[j];
+            array[j] = temp;
+          }
+        }
+      }
+
+      Li<A> output = new LL<>();
+      for (A a : array) {
+        output.add(a);
+      }
+      hd = output.get(0);
+      output.remove(0);
+      tl = (LL<A>) output;
+    }
   }
 
   @Override
@@ -196,7 +223,7 @@ public class LL<A> implements Li<A> {
   }
   @Override
   public String toString(){
-    StringBuffer result = new StringBuffer("[");
+    StringBuilder result = new StringBuilder("[");
     boolean first = true;
     for (LL<A> it = this;!it.isEmpty();it=it.tl){
       if (first){
