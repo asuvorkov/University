@@ -51,7 +51,7 @@ public class SpliterateString implements Spliterator<Character> {
 
   @Override
   public int characteristics() {
-    return SIZED| SUBSIZED;
+    return SIZED | SUBSIZED | ORDERED;
   }
 
   public static void main(String[] args) {
