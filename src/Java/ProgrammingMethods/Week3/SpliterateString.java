@@ -24,43 +24,43 @@ public class SpliterateString implements Spliterator<Character> {
 
   @Override
   public boolean tryAdvance(Consumer<? super Character> action) {
-    if (i <= end) {
-      action.accept(s.charAt(i++));
+    if(i<=end){
+      action.accept(s.charAt(i));
+      i++;
       return true;
-    }else {// cannot advance
-      return false;
     }
+    return false;
   }
 
   @Override
   public Spliterator<Character> trySplit() {
-    int low = i; // divide range in half
-    int mid = ((low + end) >>> 1) & ~1; // force midpoint to be even
-    if (low < mid) { // split out left half
-      i = mid; // reset this Spliterator's origin
-      return new SpliterateString(low, mid, s);
-    }else {// too small to split
+    if(estimateSize() < 4){
       return null;
+    }else{
+      int iOld = i;
+      int mid = (i + end) / 2;
+      i = mid;
+      return new SpliterateString(iOld,mid - 1, s);
     }
   }
 
   @Override
   public long estimateSize() {
-    return (long)((end - i) / 2);
+    return end - i;
   }
 
   @Override
   public int characteristics() {
-    return SIZED | SUBSIZED | ORDERED;
+    return ORDERED | SIZED | IMMUTABLE | SUBSIZED;
   }
 
   public static void main(String[] args) {
-    StreamSupport.stream(new SpliterateString("my name is Andrew"), false)
+    StreamSupport.stream(new SpliterateString("abcde"), false)
         .forEach(x -> System.out.println(x));
 
     System.out.println("und nun parallel");
 
-    StreamSupport.stream(new SpliterateString("my name is Andrew"), true)
+    StreamSupport.stream(new SpliterateString("abcde"), true)
         .forEach(x -> System.out.println(x));
   }
 }
