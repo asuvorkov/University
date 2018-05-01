@@ -1,4 +1,4 @@
-package Java.AlgorithmsAndDataStructures.Week2;
+package Java.Algorithms.Week2;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;

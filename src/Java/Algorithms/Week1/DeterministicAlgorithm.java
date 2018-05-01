@@ -1,4 +1,4 @@
-package Java.AlgorithmsAndDataStructures.Week1;
+package Java.Algorithms.Week1;
 
 /**
  * Created by Andrei on 15.04.2018.
