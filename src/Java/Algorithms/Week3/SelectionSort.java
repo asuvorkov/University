@@ -19,10 +19,10 @@ public class SelectionSort extends Sort{
 
   public static void main(String[] args) {
     SelectionSort sort = new SelectionSort();
-    sort.runSmall(10000);
+    sort.runSmall(1000);
 
     /*
-    Array n length has -> n^2 compares and n^2 changes
+    Array n length has -> n^2 compares and n*2 changes
      */
   }
 }

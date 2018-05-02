@@ -66,27 +66,9 @@ public class LL<A> implements Li<A>{
 
   private class MySplitter implements Spliterator<A>{
     private LL<A> ll;
-    int start;
-    int last;
 
     MySplitter(LL<A> ll){
       this.ll = ll;
-      last = findLastElem();
-      this.start = 0;
-    }
-
-    MySplitter(int start, int last, LL<A> ll){
-      this.ll = ll;
-      this.last = last;
-      this.start = start;
-    }
-
-    private int findLastElem() {
-      int i = 0;
-      while (this.get(i) != null){
-        i++;
-      }
-      return i;
     }
 
     public A get(int i){
@@ -95,8 +77,8 @@ public class LL<A> implements Li<A>{
 
     @Override
     public boolean tryAdvance(Consumer<? super A> action){
-      if (this.get(start) != null) {
-        action.accept(ll.get(start++));
+      if (this.get(0) != null) {
+        action.accept(ll.get(5));
         return true;
       }else {
         return false;
@@ -105,11 +87,10 @@ public class LL<A> implements Li<A>{
 
     @Override
     public Spliterator<A> trySplit(){
-      if (start + 5 > last) {
-        return null;
-      }else {
-        return new MySplitter(start + 5, last, ll).trySplit();
+      if(tl != null && tl.tl.hd != null && tl.tl.tl != null && tl.tl.tl.tl != null){
+        return new MySplitter(tl.tl.tl.tl);
       }
+      return null;
     }
 
     @Override
@@ -119,7 +100,7 @@ public class LL<A> implements Li<A>{
 
     @Override
     public int characteristics(){
-      return ORDERED | SUBSIZED;
+      return ORDERED;
     }
   }
 }

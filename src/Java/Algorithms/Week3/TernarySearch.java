@@ -4,12 +4,12 @@ package Java.Algorithms.Week3;
  * Created by Andrei on 01.05.2018.
  */
 public class TernarySearch {
-  public static int ternarySearch(int[] a, int value) {
+  private static int ternarySearch(int[] a, int value) {
     // FIXME: implement
     return ternarySearch(a, value, 0, a.length - 1);
   }
 
-  public static int ternarySearch(int[] array, int value, int start,int end) {
+  private static int ternarySearch(int[] array, int value, int start, int end) {
     if (start > end){
       return -1;
     }
