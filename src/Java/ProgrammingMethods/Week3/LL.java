@@ -10,7 +10,7 @@ public class LL<A> implements Li<A>{
   private A hd;
   private LL<A> tl;
 
-  public boolean isEmpty(){
+  private boolean isEmpty(){
     return hd == null && tl == null;
   }
 
@@ -23,25 +23,21 @@ public class LL<A> implements Li<A>{
     }
   }
 
-  public LL(A hd, LL<A> tl){
+  private LL(A hd, LL<A> tl){
     this.hd = hd;
     this.tl = tl;
   }
 
-  public LL() {
+  private LL() {
     this(null, null);
-  }
-
-  public A get(int i) {
-    return i==0 ? hd : tl.get(i-1);
   }
 
   @Override
   public Spliterator<A> getSpliterator(){
-    return new MySplitter(this);
+    return new MySplitter(hd, tl);
   }
 
-  public static void main (String[] args){
+  public static void main (String[] args) {
     LL<String> l = new LL();
     l.add("1");
     l.add("2");
@@ -64,21 +60,21 @@ public class LL<A> implements Li<A>{
     l.parallelStream().forEach(System.out::println);
   }
 
-  private class MySplitter implements Spliterator<A>{
-    private LL<A> ll;
+  private class MySplitter implements Spliterator<A> {
+    private LL<A> tl;
+    private A hd;
 
-    MySplitter(LL<A> ll){
-      this.ll = ll;
-    }
-
-    public A get(int i){
-      return i==0 ? hd : tl.get(i-1);
+    MySplitter(A hd, LL<A> tl){
+      this.tl = tl;
+      this.hd = hd;
     }
 
     @Override
     public boolean tryAdvance(Consumer<? super A> action){
-      if (this.get(0) != null) {
-        action.accept(ll.get(5));
+      if (hd != null) {
+        action.accept(hd);
+        hd = tl.hd;
+        tl = tl.tl;
         return true;
       }else {
         return false;
@@ -87,8 +83,16 @@ public class LL<A> implements Li<A>{
 
     @Override
     public Spliterator<A> trySplit(){
-      if(tl != null && tl.tl.hd != null && tl.tl.tl != null && tl.tl.tl.tl != null){
-        return new MySplitter(tl.tl.tl.tl);
+      if(hd != null && tl.hd != null && tl.tl.hd != null && tl.tl.tl.hd != null
+          && tl.tl.tl.tl.hd != null && tl.tl.tl.tl.tl.hd != null){
+        LL<A> temp = new LL<>();
+        temp.add(hd);
+        temp.add(tl.hd);
+        temp.add(tl.tl.hd);
+        temp.add(tl.tl.tl.hd);
+        hd = tl.tl.tl.tl.hd;
+        tl = tl.tl.tl.tl.tl;
+        return new MySplitter(temp.hd, temp.tl);
       }
       return null;
     }
