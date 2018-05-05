@@ -28,7 +28,7 @@ public interface Tree<E> {
     List<E> result = new ArrayList<>();
     fringe(result);
     return result;
-  };
+  }
 
   void pathTo(E elem, List<E> result);
 

@@ -80,37 +80,107 @@ public class T<E> implements Tree<E> {
     children.parallelStream().forEach(tail -> tail.forEach(con));
   }
 
-  public static void main(String[] args) {
-    T<String> xs = new T<String>("Pizza",
-        new T<String>("liebt",
-            new T<String>("rote",
-                new T<String>("Lukas",
-                    new T<String>()))));
-    System.out.println(xs.size());
-    System.out.println(xs.contains("rote"));
-    System.out.println(xs.contains("Julia"));
-    xs.forEach(x -> System.out.println(x.toUpperCase()));
-  }
-
   @Override
   public boolean contains(Predicate<E> pred) {
+    if (pred.test(element)) {
+      return true;
+    } else {
+      for (Tree<E> child : children) {
+        if (!child.isEmptyTree()){
+          if (child.contains(pred)){
+            return true;
+          }
+        }
+      }
+    }
     return false;
   }
 
   @Override
   public void fringe(List<E> result) {
+    for (Tree<E> child : children) {
+      if (child.size() == 0){
+        result.add(getElement());
+      }else {
+        child.fringe(result);
+      }
+    }
   }
 
   @Override
   public void mapModify(Function<E, E> f) {
+    if (element != null){
+      element = f.apply(element);
+    }
+    if (children != null){
+      for (Tree<E> child : children) {
+        child.mapModify(f);
+      }
+    }
   }
 
   @Override
   public <R> T<R> mapNew(Function<E, R> f) {
-    return new T<>();
+    T<R> r = new T<>(f.apply(element), new T<>());
+
+    if (r.element != null){
+      r.element = f.apply(element);
+    }
+    if (r.children != null){
+      for (Tree<E> child : children) {
+        if (child.getElement() != null){
+          r.addChild(child.mapNew(f));
+        }
+      }
+    }
+
+    return r;
   }
 
   @Override
   public void pathTo(E elem, List<E> result) {
+    if (this.toString().contains("" + elem)) {
+      result.add(element);
+      while (elem != element) {
+        if (result.get(result.size() - 1) == elem) {
+          break;
+        }
+        if (children.size() == 1) {
+          children.get(0).pathTo(elem, result);
+        }
+        if (children.size() > 1) {
+          for (Tree<E> currentChild : children) {
+            if (findRightChild(currentChild, elem)) {
+              currentChild.pathTo(elem, result);
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private boolean findRightChild(Tree<E> child, E elem) {
+    if (child.getElement() == elem) {
+      return true;
+    }
+
+    if (child.getChildNodes() != null){
+      if (child.getChildNodes().size() == 1) {
+        boolean out = findRightChild(child.getChildNodes().get(0), elem);
+        if (out){
+          return true;
+        }
+      }
+      if (child.getChildNodes().size() > 1) {
+        for (Tree<E> c : child.getChildNodes()){
+          boolean out = findRightChild(c, elem);
+          if (out){
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 }
