@@ -1,6 +1,7 @@
 package Java.ProgrammingMethods.Week4;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -10,15 +11,14 @@ import java.util.function.Predicate;
  * Created by Andrei on 05.05.2018.
  */
 public class T<E> implements Tree<E> {
-  List<Tree<E>> children;
-  E element;
+  private List<Tree<E>> children;
+  private E element;
 
   @SafeVarargs
-  public T(E el, T<E>... ts) {
+  private T(E el, T<E>... ts) {
     element = el;
     children = new ArrayList<>();
-    for (T<E> t : ts)
-      children.add(t);
+    Collections.addAll(children, ts);
   }
 
   public T(E el, List<Tree<E>> child) {
@@ -82,13 +82,15 @@ public class T<E> implements Tree<E> {
 
   @Override
   public boolean contains(Predicate<E> pred) {
-    if (pred.test(element)) {
+    if (element != null && pred.test(element)) {
       return true;
     } else {
-      for (Tree<E> child : children) {
-        if (!child.isEmptyTree()){
-          if (child.contains(pred)){
-            return true;
+      if (children != null){
+        for (Tree<E> child : children) {
+          if (!child.isEmptyTree()){
+            if (child.contains(pred)){
+              return true;
+            }
           }
         }
       }
@@ -98,10 +100,11 @@ public class T<E> implements Tree<E> {
 
   @Override
   public void fringe(List<E> result) {
-    for (Tree<E> child : children) {
-      if (child.size() == 0){
+    if (!isEmptyTree()){
+      if (children.size() == 0 || children.get(0).getElement() == null){
         result.add(getElement());
-      }else {
+      }
+      for (Tree<E> child : children) {
         child.fringe(result);
       }
     }
@@ -121,7 +124,7 @@ public class T<E> implements Tree<E> {
 
   @Override
   public <R> T<R> mapNew(Function<E, R> f) {
-    T<R> r = new T<>(f.apply(element), new T<>());
+    T<R> r = new T<>(f.apply(element));
 
     if (r.element != null){
       r.element = f.apply(element);
