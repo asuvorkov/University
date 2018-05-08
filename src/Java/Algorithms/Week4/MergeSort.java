@@ -19,12 +19,15 @@ public class MergeSort {
       sort(a, left, m);
       sort(a, m + 1, right);
       merge(a, left, m, right);
+
     }
   }
 
   public static void main (String[] args){
     MergeSort mergeSort = new MergeSort();
-    int[] a = {6, 1, 3, 4, 8, 7, 2, 9};
+    int[] a = {6, 1, 3, 4, 8, 7, 2, 9, 0, 5};
+    int[] b = {-5, -7, -1, -2, -9, -3, -6, -4, -8};
+    int[] c = {3, 3, 3, 5, 5, 5, 5, 5};
     mergeSort.sort(a);
 
     for (Integer el : a) {
