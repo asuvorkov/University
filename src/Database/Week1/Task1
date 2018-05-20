@@ -1,0 +1,18 @@
+Relationale:
+•	Daten werden in Tabellen gespeichert
+•	Hohe Transaktionsrate
+•	Beziehungen zwischen Tabellen
+
+XML:
+•	hierarchische Daten (Baum)
+•	Eigene Abfragesprache (Xpath, Xquery)
+•	beliebig tief strukturierte Dokumente
+•	Bei großen Datenmengen nicht so leistungsfähig wie
+        Relationale DB
+
+Objektrelationale:
+•	Speicherung von Objekten und nicht nur von Records
+•	Abfrage durch Object Query Language
+•	Komplexere Datentypen
+•	Beziehungen zwischen Objekten
+•	Lange andauernde Transaktionen
