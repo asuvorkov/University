@@ -1,0 +1,38 @@
+Auto = {ID, Typ, Ausstattungsvariante, Identifikation(Fahrgestellnummer,Motornummer), Motorart, Hubraum, KW, Preis}
+
+Kunden = {ID, Name(Vorname, Nachname), Adresse(Strasse, Hausnummer, PLZ), Telefonnummer, Kunde seit(Jahr, Monat, Tag)}
+
+Fährt zur Zeit = (ID Auto, ID Kunde, Kaufdatum)
+
+
+Zeitpunkt T1
+
+Auto =  {’Car1’, ’Coupe’, ’Gti’,  ('SC50B-400233‘,’W0L0TGF35X2200696'), ’Benzin’, 5000, 220, 53500}
+Auto =  {’Car2’, ’Van’, ’X Li’,  ('SC20D-140011‘,‘W0L0TVF40X577567’), ’Diesel’, 2000, 102, 35765}
+Auto =  {’Car3’, 'Kombi', 'Li',  ('SC19H-150898‘,’W0L0TKBX6529648’), 'Hydro', 1900, 110, 28756}
+Auto =  {’Car4’, ’Roadster’, 'Li',  ('SC22B-250233','W0L0TRD35X2971365), ’Benzin’, 2200, 183, 45865}
+
+
+Kunde = {’KDMM1’, (Max, Mustermann), (Moritzstrasse, 29, 65185), +4918685668058, (2017, 05, 12)}
+Kunde = {’KDJC1’, (Julius, Cesar), (Römerstrasse, 1, 10815), +49443251, (2017, 01, 07)}
+Kunde = {’KDBB1’, (Bibi, Bank), (Sackgasse, 4, 65435), +49985643, (2014, 24, 02)}
+
+fährt zur zeit  = ('Car1', 'KDJC1', '2017-14-08‘)
+fährt zur zeit  = ('Car4', 'KDBB1', '2017-10-01')
+fährt zur zeit  = ('Car2', 'KDMM1', '2017-07-01')
+
+
+Zeitpunkt T2
+
+Auto =  {’Car2’, ’Van’, ’X Li‚,  ('SC20D-140011‘,‘W0L0TVF40X577567’), ’Diesel’, 2000, 102, 35765}
+Auto =  {’Car5’, 'Kombi',‘Gti’,  ('SC22B-200222‘,’W0L0TKBX6523452’),‘Benzin’, 2200, 160, 33678}
+Auto =  {’Car6’, ’Van’, 'Li',  ('SC16B-130124‘,’W0L0TVF35X86739), ’Hydro’, 1600, 75, 23573}
+
+
+Kunde = {’KDJC1’, (Julius, Cesar), (Römerstrasse, 1, 10815), +49443251, (2017, 01, 07)}
+Kunde = {’KDBB1’, (Bibi, Bank), (Sackgasse, 4, 65435), +49985643, (2014, 24, 02)}
+Kunde = {’KDBB2’, (Benjamin, Blüte), (Sackgasse, 4, 65435), +49985643, (2016, 04, 09)}
+Kunde = {’KDLG1’, (Luke, Glück), (Western-Allee, 42, 65435), +49996254, (2015, 12, 10)}
+
+fährt zur zeit  = ('Car1', ’KDBB2’, '2018-03-10‘)
+fährt zur zeit  = ('Car4', ’KDLG1’, '2018-02-01')
