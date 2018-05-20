@@ -1,0 +1,11 @@
+•	Welcher Datentyp soll gespeichert werden?
+•	Definitionsbereich fur jedes Wert?
+•	Welche Beziehungen haben die Daten?
+•	Auf welcher Grenze liegt akzeptierende Geschwindigkeit der Bearbeitung der Daten?
+•	Wie viele Benutzer ?
+•	Verschiedene Benutzerrechte ?
+•	Soll die Datenbankstruktur erweiterbar sein?
+•	Größe der Datenmengen?
+•	Mehrbenutzer Betrieb notwendig?
+•	Zugrif gleichzeitig fur mehrere User?
+•	Minimale Verfugbarkei des Systems?
