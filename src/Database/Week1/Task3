@@ -1,0 +1,12 @@
+•	Trennung der DB auf zwei Gruppen – Waren und Mitarbeiter
+•	Klare Hierarchie fur jeder Benutzer (Trennung auf
+        Benutzergruppen)
+•	Jede Gruppe hat besstimte Rechte
+•	Rate der Verfugbarkeit der Waren Gruppe soll bei 99% liegen
+•	Einfuhrung des Backup Systems fur DB
+•	Sicherheitsmassnahmen
+•	Hohe Transaktionsrate
+•	Leistungsfähig bei großen Datenmengen
+•	Mehrbenutzerzugrif auf DB
+•	Intuitive und relativ einfache Grafische Oberflache fur
+        Mitarbeiter
