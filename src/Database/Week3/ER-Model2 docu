@@ -1,0 +1,3 @@
+Die Entitäten „Professor“ und „Student“ haben keine Primärschlüssel. Auch das Attribut „Note“ gehört unserer Meinung
+ nach nicht zur „Schreibt eine Prüfung bei“ Beziehung, da eine Benotung eine neue Beziehung zwischen den Entitäten
+  darstellt. „Note“ wird als ein Attribut für die neue „Benotet einem Student“ Beziehung verwendet.
