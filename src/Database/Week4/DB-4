@@ -1,0 +1,350 @@
+# noinspection SqlNoDataSourceInspectionForFile
+
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4541
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: mysql1.local.cs.hs-rm.de (MySQL 5.5.60-0+deb8u1)
+# Datenbank: db18s024
+# Erstellt am: 2018-05-20 12:51:00 +0000
+# ************************************************************
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Export von Tabelle abteilung
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `abteilung`;
+
+CREATE TABLE `abteilung` (
+  `abt_name` varchar(30) NOT NULL,
+  `abt_artikel` int(11) DEFAULT NULL,
+  `abt_name_des_angestellten` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`abt_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle angestellte
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `angestellte`;
+
+CREATE TABLE `angestellte` (
+  `ang_nummer` int(11) NOT NULL,
+  `ang_adresse` varchar(50) DEFAULT NULL,
+  `ang_name` varchar(30) DEFAULT NULL,
+  `ang_abteilung` varchar(30) DEFAULT NULL,
+  `abt_name` varchar(30) NOT NULL,
+  PRIMARY KEY (`ang_nummer`),
+  KEY `abt_name` (`abt_name`),
+  CONSTRAINT `Angestellte_ibfk_1` FOREIGN KEY (`abt_name`) REFERENCES `abteilung` (`abt_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle artikel
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `artikel`;
+
+CREATE TABLE `artikel` (
+  `art_lieferantnummer` int(11) NOT NULL,
+  `art_bezeichungen` varchar(30) NOT NULL,
+  `art_lieferant` varchar(30) NOT NULL,
+  `art_preis` int(4) NOT NULL,
+  `art_supermarktnummer` int(10) NOT NULL,
+  PRIMARY KEY (`art_lieferantnummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_besucht_uebung
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_besucht_uebung`;
+
+CREATE TABLE `hs_besucht_uebung` (
+  `stud_matr_nummer` int(11) NOT NULL,
+  `ueb_nummer` int(3) NOT NULL,
+  PRIMARY KEY (`stud_matr_nummer`,`ueb_nummer`),
+  KEY `ueb_nummer` (`ueb_nummer`),
+  CONSTRAINT `hs_besucht_uebung_ibfk_1` FOREIGN KEY (`stud_matr_nummer`) REFERENCES `hs_student` (`stud_matr_nummer`),
+  CONSTRAINT `hs_besucht_uebung_ibfk_2` FOREIGN KEY (`ueb_nummer`) REFERENCES `hs_uebung` (`ueb_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_findet_statt
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_findet_statt`;
+
+CREATE TABLE `hs_findet_statt` (
+  `vls_nummer` int(20) NOT NULL,
+  `ueb_nummer` int(3) NOT NULL,
+  PRIMARY KEY (`vls_nummer`,`ueb_nummer`),
+  KEY `ueb_nummer` (`ueb_nummer`),
+  CONSTRAINT `hs_findet_statt_ibfk_1` FOREIGN KEY (`vls_nummer`) REFERENCES `hs_vorlesung` (`vls_nummer`),
+  CONSTRAINT `hs_findet_statt_ibfk_2` FOREIGN KEY (`ueb_nummer`) REFERENCES `hs_uebung` (`ueb_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_haelt_vls
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_haelt_vls`;
+
+CREATE TABLE `hs_haelt_vls` (
+  `vls_nummer` int(20) NOT NULL,
+  `prof_ang_nummer` int(11) NOT NULL,
+  PRIMARY KEY (`vls_nummer`,`prof_ang_nummer`),
+  KEY `prof_ang_nummer` (`prof_ang_nummer`),
+  CONSTRAINT `hs_haelt_vls_ibfk_1` FOREIGN KEY (`vls_nummer`) REFERENCES `hs_vorlesung` (`vls_nummer`),
+  CONSTRAINT `hs_haelt_vls_ibfk_2` FOREIGN KEY (`prof_ang_nummer`) REFERENCES `hs_professor` (`prof_ang_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_hoersaal
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_hoersaal`;
+
+CREATE TABLE `hs_hoersaal` (
+  `horsal_name` varchar(10) NOT NULL,
+  `vls_nummer` int(20) NOT NULL,
+  PRIMARY KEY (`horsal_name`),
+  KEY `vls_nummer` (`vls_nummer`),
+  CONSTRAINT `hs_hoersaal_ibfk_1` FOREIGN KEY (`vls_nummer`) REFERENCES `hs_vorlesung` (`vls_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_hoert_vls
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_hoert_vls`;
+
+CREATE TABLE `hs_hoert_vls` (
+  `vls_nummer` int(20) NOT NULL,
+  `stud_matr_nummer` int(11) NOT NULL,
+  PRIMARY KEY (`vls_nummer`,`stud_matr_nummer`),
+  KEY `stud_matr_nummer` (`stud_matr_nummer`),
+  CONSTRAINT `hs_hoert_vls_ibfk_1` FOREIGN KEY (`vls_nummer`) REFERENCES `hs_vorlesung` (`vls_nummer`),
+  CONSTRAINT `hs_hoert_vls_ibfk_2` FOREIGN KEY (`stud_matr_nummer`) REFERENCES `hs_student` (`stud_matr_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `hs_hoert_vls` WRITE;
+/*!40000 ALTER TABLE `hs_hoert_vls` DISABLE KEYS */;
+
+INSERT INTO `hs_hoert_vls` (`vls_nummer`, `stud_matr_nummer`)
+VALUES
+	(213,1);
+
+/*!40000 ALTER TABLE `hs_hoert_vls` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Export von Tabelle hs_ort
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_ort`;
+
+CREATE TABLE `hs_ort` (
+  `ort` varchar(10) NOT NULL,
+  `ueb_nummer` int(3) NOT NULL,
+  PRIMARY KEY (`ort`,`ueb_nummer`),
+  KEY `ueb_nummer` (`ueb_nummer`),
+  CONSTRAINT `hs_ort_ibfk_1` FOREIGN KEY (`ueb_nummer`) REFERENCES `hs_uebung` (`ueb_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_professor
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_professor`;
+
+CREATE TABLE `hs_professor` (
+  `prof_ang_nummer` int(11) NOT NULL,
+  `prof_tel_nummer` int(20) NOT NULL,
+  `prof_fach` varchar(30) NOT NULL,
+  `prof_name` varchar(30) NOT NULL,
+  `prof_anschrift` varchar(50) NOT NULL,
+  PRIMARY KEY (`prof_ang_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_stud_hilfskraft
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_stud_hilfskraft`;
+
+CREATE TABLE `hs_stud_hilfskraft` (
+  `hk_fachbereich` varchar(30) NOT NULL,
+  `hk_wochenstd` int(2) DEFAULT NULL,
+  `stud_matr_nummer` int(11) NOT NULL,
+  PRIMARY KEY (`stud_matr_nummer`),
+  CONSTRAINT `hs_stud_hilfskraft_ibfk_1` FOREIGN KEY (`stud_matr_nummer`) REFERENCES `hs_student` (`stud_matr_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_student
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_student`;
+
+CREATE TABLE `hs_student` (
+  `stud_matr_nummer` int(11) NOT NULL AUTO_INCREMENT,
+  `stud_name` varchar(30) NOT NULL,
+  `stud_semester` int(2) DEFAULT NULL,
+  `stud_adrr` varchar(30) NOT NULL,
+  `stud_fach` varchar(30) NOT NULL,
+  `stud_abschluss` varchar(30) NOT NULL,
+  PRIMARY KEY (`stud_matr_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `hs_student` WRITE;
+/*!40000 ALTER TABLE `hs_student` DISABLE KEYS */;
+
+INSERT INTO `hs_student` (`stud_matr_nummer`, `stud_name`, `stud_semester`, `stud_adrr`, `stud_fach`, `stud_abschluss`)
+VALUES
+	(1,'Hans Maiser',1,'Testweg 12','Informatik','Bachelor'),
+	(2,'Hans Peter',1,'Testweg 12','Informatik','Bachelor');
+
+/*!40000 ALTER TABLE `hs_student` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Export von Tabelle hs_tag_uhrzeit
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_tag_uhrzeit`;
+
+CREATE TABLE `hs_tag_uhrzeit` (
+  `tag` varchar(10) NOT NULL,
+  `uhrzeit` time NOT NULL,
+  `ort` varchar(10) NOT NULL,
+  `ueb_nummer` int(3) NOT NULL,
+  PRIMARY KEY (`tag`,`uhrzeit`,`ort`,`ueb_nummer`),
+  KEY `ort` (`ort`,`ueb_nummer`),
+  CONSTRAINT `hs_tag_uhrzeit_ibfk_1` FOREIGN KEY (`ort`, `ueb_nummer`) REFERENCES `hs_ort` (`ort`, `ueb_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle hs_uebung
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_uebung`;
+
+CREATE TABLE `hs_uebung` (
+  `ueb_nummer` int(3) NOT NULL,
+  `ueb_stunden` int(3) NOT NULL,
+  PRIMARY KEY (`ueb_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `hs_uebung` WRITE;
+/*!40000 ALTER TABLE `hs_uebung` DISABLE KEYS */;
+
+INSERT INTO `hs_uebung` (`ueb_nummer`, `ueb_stunden`)
+VALUES
+	(123,3);
+
+/*!40000 ALTER TABLE `hs_uebung` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Export von Tabelle hs_vorlesung
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `hs_vorlesung`;
+
+CREATE TABLE `hs_vorlesung` (
+  `vls_nummer` int(20) NOT NULL,
+  `vls_titel` varchar(30) NOT NULL,
+  `vls_anz_std` int(3) NOT NULL,
+  PRIMARY KEY (`vls_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `hs_vorlesung` WRITE;
+/*!40000 ALTER TABLE `hs_vorlesung` DISABLE KEYS */;
+
+INSERT INTO `hs_vorlesung` (`vls_nummer`, `vls_titel`, `vls_anz_std`)
+VALUES
+	(213,'Datenbanken',30);
+
+/*!40000 ALTER TABLE `hs_vorlesung` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Export von Tabelle lieferant
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `lieferant`;
+
+CREATE TABLE `lieferant` (
+  `lief_name` varchar(30) NOT NULL,
+  `lief_adresse` varchar(50) DEFAULT NULL,
+  `lief_artikel` int(11) DEFAULT NULL,
+  PRIMARY KEY (`lief_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle liefert
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `liefert`;
+
+CREATE TABLE `liefert` (
+  `lief_name` varchar(30) NOT NULL,
+  `art_lieferantnummer` int(11) NOT NULL,
+  PRIMARY KEY (`lief_name`,`art_lieferantnummer`),
+  KEY `art_lieferantnummer` (`art_lieferantnummer`),
+  CONSTRAINT `liefert_ibfk_1` FOREIGN KEY (`lief_name`) REFERENCES `lieferant` (`lief_name`),
+  CONSTRAINT `liefert_ibfk_2` FOREIGN KEY (`art_lieferantnummer`) REFERENCES `artikel` (`art_lieferantnummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Export von Tabelle manager
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `manager`;
+
+CREATE TABLE `manager` (
+  `man_name` varchar(30) NOT NULL,
+  `ang_nummer` int(11) NOT NULL,
+  `abt_name` varchar(30) NOT NULL,
+  PRIMARY KEY (`man_name`),
+  KEY `ang_nummer` (`ang_nummer`),
+  KEY `abt_name` (`abt_name`),
+  CONSTRAINT `manager_ibfk_2` FOREIGN KEY (`abt_name`) REFERENCES `abteilung` (`abt_name`),
+  CONSTRAINT `manager_ibfk_1` FOREIGN KEY (`ang_nummer`) REFERENCES `angestellte` (`ang_nummer`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
