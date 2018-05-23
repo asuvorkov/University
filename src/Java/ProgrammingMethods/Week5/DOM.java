@@ -1,7 +1,6 @@
 package Java.ProgrammingMethods.Week5;
 
 import java.util.Set;
-
 import org.w3c.dom.*;
 
 /**
@@ -23,12 +22,11 @@ public class DOM implements  DOMUtil {
     return result + 1;
   }
 
-  public long height2(Node n){ //TODO
-    if (!n.hasChildNodes()){
-      return 1;
-    }else {
-      return 0;
-    }
+  public long height2(Node n){
+    return 1 + new NodeListSpliterator(n.getChildNodes())
+        .parallelStream()
+        .reduce((long) 0, (node, child)
+            -> Math.max(node, height2(child)), Math::max);
   }
 
   public void collectText(Node n, StringBuffer result){
@@ -46,48 +44,64 @@ public class DOM implements  DOMUtil {
   }
 
   public void collectText2(Node n, StringBuffer result){
-    //TODO
+    if (n != null && n.getNodeType() == Node.TEXT_NODE){
+      result.append(n);
+    }
+
+    if (n != null){
+      new NodeListSpliterator(n.getChildNodes())
+          .parallelStream()
+          .forEach((Node node) -> collectText2(node, result));
+    }
   }
 
   @Override
   public boolean containsTag(Node n, String tagname) {
-    if (n.getNodeType() == Node.ELEMENT_NODE) {
-      Element element = (Element) n;
-      if (element.getTagName().equals(tagname)) {
+    if (n.getNodeName().equals(tagname)){
+      return true;
+    }
+
+    NodeList children = n.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++){
+      if (containsTag(children.item(i), tagname)){
         return true;
       }
     }
-    if (n.hasChildNodes()) {
-      for (int i = 0; i < n.getChildNodes().getLength(); i++){
-        if (containsTag(n.getChildNodes().item(i), tagname)){
-          return true;
-        }
-      }
-    }
+
     return false;
   }
 
   @Override
   public boolean containsTag2(Node n, String tagname) {
-    return false;
+    return new NodeListSpliterator(n.getChildNodes())
+        .parallelStream()
+        .reduce(n.getNodeName()
+            .equals(tagname), (node, child) -> node
+            || containsTag2(child, tagname)
+            , (node1, child1) -> node1 || child1);
   }
 
   @Override
   public void collectTagnames(Node n, Set<String> result) {
-    if (n.getNodeType() == Node.ELEMENT_NODE) {
-      Element element = (Element) n;
-      result.add(element.getTagName());
+    if (n.getNodeType() != Node.TEXT_NODE){
+      result.add(n.getNodeName());
     }
-    if (n.hasChildNodes()) {
-      for (int i = 0; i < n.getChildNodes().getLength(); i++){
-        collectTagnames(n.getChildNodes().item(i), result);
-      }
+
+    NodeList children = n.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++){
+      collectTagnames(children.item(i), result);
     }
   }
 
   @Override
   public void collectTagnames2(Node n, Set<String> result) {
+    if (n.getNodeType() != Node.TEXT_NODE){
+      result.add(n.getNodeName());
+    }
 
+    new NodeListSpliterator(n.getChildNodes())
+        .parallelStream()
+        .forEach(child -> collectTagnames2(child, result));
   }
 
   @Override
@@ -97,9 +111,9 @@ public class DOM implements  DOMUtil {
     if (n.hasAttributes()){
       for (int i = 0; i < n.getAttributes().getLength(); i++){
         if (n.getAttributes().getNamedItem("width") != null){
-          Attr attr = (Attr) n.getAttributes().getNamedItem("width");
-          if (Long.parseLong(attr.getValue()) > result){
-            result = Long.parseLong(attr.getValue());
+          Node attr = n.getAttributes().getNamedItem("width");
+          if (Long.parseLong(attr.getNodeValue()) > result){
+            result = Long.parseLong(attr.getNodeValue());
           }
         }
       }
