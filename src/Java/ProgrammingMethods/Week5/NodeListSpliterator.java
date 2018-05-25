@@ -50,19 +50,19 @@ public class NodeListSpliterator implements Spliterator<Node> {
 
   @Override
   public Spliterator<Node> trySplit() {
-    long low = start; // divide range in half
-    long mid = ((low + end) >>> 1) & ~1; // force midpoint to be even
-    if (low < mid) { // split out left half
-      start = mid; // reset this Spliterator's origin
-      return new NodeListSpliterator(ns, low, mid);
-    }else { // too small to split
+    if(estimateSize() < 4){
       return null;
+    }else{
+      long iOld = start;
+      long mid = (start + end) / 2;
+      start = mid;
+      return new NodeListSpliterator(ns, iOld,mid - 1);
     }
   }
 
   @Override
   public long estimateSize() {
-    return (end - start) / 2;
+    return end - start;
   }
 
   @Override
