@@ -1,0 +1,1 @@
+SELECT  SUM(anzahl*einzelpreis) / COUNT(DISTINCT be_nr) FROM bestellung_beinhaltet_medienartikel;
