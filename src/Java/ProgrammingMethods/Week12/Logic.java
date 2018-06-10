@@ -1,11 +1,11 @@
 package Java.ProgrammingMethods.Week12;
 
 import java.util.Set;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
+    import java.util.HashSet;
+    import java.util.Map;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.ArrayList;
 
 /**
  * Created by Andrei on 31.05.2018.
@@ -32,9 +32,9 @@ public interface Logic {
   default Logic knf(){
     return
         replaceImplication().
-        negationInside().
-        distributiv()
-     ;
+            negationInside().
+            distributiv()
+        ;
   }
   //Abstract methods to be implemented in subclasses.
   Logic replaceImplication();
@@ -57,13 +57,12 @@ public interface Logic {
     System.out.println(a4);
     System.out.println(a4.knf());
 
-   Logic f1 =
+    Logic f1 =
         not(
             not(var("a").implies(var("b")))
                 .and(var("c"))
                 .or(var("d")));
     System.out.println(f1);
-    System.out.println(f1.signature());
     System.out.println(f1.knf());
     System.out.println(not(not(not(not(var("a"))))));
     System.out.println(not(not(not(not(var("a"))))).knf());

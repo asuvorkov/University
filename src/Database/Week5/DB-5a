@@ -1,0 +1,1 @@
+SELECT titel FROM medienartikel WHERE a_nr IN (SELECT a_nr FROM film WHERE produzent RLIKE 'Bruckheimer');
