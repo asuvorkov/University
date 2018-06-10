@@ -1,0 +1,4 @@
+SELECT SUM(dauer) FROM musikstueck WHERE musikstueck.id  IN
+(SELECT tontraeger_enthaelt_musikstueck.id FROM tontraeger_enthaelt_musikstueck WHERE tontraeger_enthaelt_musikstueck.a_nr =
+(SELECT tontraeger.a_nr FROM tontraeger WHERE tontraeger.a_nr =
+(SELECT a_nr FROM medienartikel WHERE medienartikel.titel = 'The Best of Michael Jackson')));
