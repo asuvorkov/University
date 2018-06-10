@@ -1,0 +1,7 @@
+CREATE  VIEW `sview`
+AS SELECT
+   distinct `kunde`.`p_nr` AS `p_nr`,
+   `person`.`vorname` AS `vorname`,
+   `person`.`name` AS `name`,
+   `kunde`.`adresse` AS `adresse`
+FROM (`kunde` join `person` on((`person`.`p_nr` = `kunde`.`p_nr`)));
