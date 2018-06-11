@@ -1,0 +1,4 @@
+SELECT sview.name AS Kunde, SUM(anzahl)/COUNT(anzahl) AS durchschnitt
+FROM bestellung_beinhaltet_medienartikel
+INNER JOIN bestellung ON bestellung_beinhaltet_medienartikel.be_nr = bestellung.be_nr
+INNER JOIN `sview` ON bestellung.p_nr = sview.p_nr GROUP BY bestellung_beinhaltet_medienartikel.be_nr;
