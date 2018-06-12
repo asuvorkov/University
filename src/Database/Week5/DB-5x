@@ -1,0 +1,2 @@
+UPDATE kunde SET adresse ="Unter den Eichen 5, 65195 Wiesbaden"
+WHERE kunde.p_nr = (SELECT person.`p_nr` FROM person WHERE (person.`vorname`,person.name) = ('Jan','Kramer'));
