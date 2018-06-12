@@ -1,0 +1,3 @@
+SELECT medienartikel.titel FROM medienartikel WHERE medienartikel.a_nr IN
+(SELECT schauspieler_spielt_in_film.a_nr FROM schauspieler_spielt_in_film WHERE schauspieler_spielt_in_film.p_nr IN
+(SELECT schauspieler.p_nr FROM schauspieler WHERE schauspieler.mgr LIKE '%Dembrowski'))
