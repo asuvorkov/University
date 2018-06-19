@@ -1,0 +1,11 @@
+CREATE TRIGGER trg_bestellung BEFORE INSERT ON bestellung_beinhaltet_medienartikel
+FOR EACH ROW
+BEGIN
+SET NEW.anzahl = IF
+(
+   (SELECT bestand from lagerbestand WHERE lagerbestand.a_nr = NEW.a_nr) < NEW.anzahl,
+   (SELECT bestand from lagerbestand WHERE lagerbestand.a_nr = NEW.a_nr),
+   NEW.anzahl
+)
+;
+END
