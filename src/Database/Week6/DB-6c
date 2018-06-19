@@ -1,0 +1,120 @@
+CREATE TRIGGER trg_bestellung2 AFTER INSERT ON bestellung_beinhaltet_medienartikel
+FOR EACH ROW
+BEGIN
+UPDATE lagerbestand SET bestand = bestand - NEW.anzahl
+WHERE lagerbestand.a_nr = NEW.a_nr
+;
+END
+
+
+CREATE TRIGGER trg_bestellung3 BEFORE DELETE ON bestellung_beinhaltet_medienartikel
+FOR EACH ROW
+BEGIN
+UPDATE lagerbestand SET bestand = bestand + OLD.anzahl
+WHERE lagerbestand.a_nr = OLD.a_nr
+;
+END
+
+
+CREATE TRIGGER trg_bestellung4 BEFORE UPDATE ON bestellung_beinhaltet_medienartikel
+FOR EACH ROW
+BEGIN IF (OLD.anzahl >= NEW.anzahl AND NEW.anzahl < 0) THEN SET NEW.anzahl = 0
+;
+END IF
+;
+IF
+(
+   OLD.anzahl >= NEW.anzahl
+   AND NEW.anzahl >= 0
+)
+THEN SET NEW.anzahl = NEW.anzahl
+;
+END IF
+;
+IF
+(
+   OLD.anzahl < NEW.anzahl
+   AND
+   (
+      NEW.anzahl - OLD.anzahl
+   )
+   <=
+   (
+      SELECT
+      lagerbestand.bestand
+      FROM lagerbestand
+      WHERE lagerbestand.a_nr = OLD.a_nr
+   )
+)
+THEN SET NEW.anzahl = OLD.anzahl + (NEW.anzahl - OLD.anzahl)
+;
+END IF
+;
+IF
+(
+   OLD.anzahl < NEW.anzahl
+   AND
+   (
+      NEW.anzahl - OLD.anzahl
+   )
+   >
+   (
+      SELECT
+      lagerbestand.bestand
+      FROM lagerbestand
+      WHERE lagerbestand.a_nr = OLD.a_nr
+   )
+)
+THEN SET NEW.anzahl = OLD.anzahl +
+(
+   SELECT
+   lagerbestand.bestand
+   FROM lagerbestand
+   WHERE lagerbestand.a_nr = OLD.a_nr
+)
+;
+END IF
+;
+END
+;
+
+
+CREATE TRIGGER trg_bestellung5 AFTER UPDATE ON bestellung_beinhaltet_medienartikel
+FOR EACH ROW
+BEGIN IF
+(
+   (
+      SELECT
+      lagerbestand.bestand
+      FROM lagerbestand
+      WHERE lagerbestand.a_nr = OLD.a_nr
+   )
+   + (OLD.anzahl - NEW.anzahl) < 0
+)
+THEN
+UPDATE lagerbestand SET lagerbestand.bestand = 0
+WHERE lagerbestand.a_nr = OLD.a_nr
+;
+END IF
+;
+IF
+(
+   (
+      SELECT
+      lagerbestand.bestand
+      FROM lagerbestand
+      WHERE lagerbestand.a_nr = OLD.a_nr
+   )
+   + (OLD.anzahl - NEW.anzahl) > -1
+)
+THEN
+UPDATE lagerbestand SET lagerbestand.bestand = lagerbestand.bestand+
+(
+   OLD.anzahl - NEW.anzahl
+)
+WHERE lagerbestand.a_nr = OLD.a_nr
+;
+END IF
+;
+END
+;
