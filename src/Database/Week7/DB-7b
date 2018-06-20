@@ -1,0 +1,6 @@
+CREATE TABLE `nachbestellen` (
+  `a_nr` varchar(13) NOT NULL,
+  `best_anzahl` int(3) DEFAULT NULL,
+  PRIMARY KEY (`a_nr`),
+  CONSTRAINT `nachbestellen_ibfk_1` FOREIGN KEY (`a_nr`) REFERENCES `lagerbestand` (`a_nr`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
