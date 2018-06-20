@@ -1,0 +1,25 @@
+CREATE TRIGGER trg_nachbestellung AFTER UPDATE ON lagerbestand
+FOR EACH ROW
+BEGIN
+	DELETE FROM nachbestellen WHERE NEW.a_nr = nachbestellen.a_nr;
+	IF (
+	(SELECT preis FROM angebot WHERE NEW.a_nr = angebot.a_nr) > 6
+	) THEN
+		IF (NEW.bestand < 5 AND NEW.bestand > 0) THEN
+			INSERT INTO nachbestellen (a_nr, best_anzahl) VALUES (NEW.a_nr,(5 - NEW.bestand));
+		END IF;
+		IF (NEW.bestand < 1) THEN
+			INSERT INTO nachbestellen (a_nr, best_anzahl) VALUES (NEW.a_nr, 5);
+		END IF;
+	END IF;
+	IF (
+	(SELECT preis FROM angebot WHERE NEW.a_nr = angebot.a_nr) <= 6
+	) THEN
+		IF (NEW.bestand < 10 AND NEW.bestand > 0) THEN
+			INSERT INTO nachbestellen (a_nr, best_anzahl) VALUES (NEW.a_nr,(10 - NEW.bestand));
+		END IF;
+		IF (NEW.bestand < 1) THEN
+			INSERT INTO nachbestellen (a_nr, best_anzahl) VALUES (NEW.a_nr, 10);
+		END IF;
+	END IF;
+END;
