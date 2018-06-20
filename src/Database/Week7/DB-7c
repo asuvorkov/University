@@ -1,0 +1,38 @@
+DELIMITER
+
+CREATE PROCEDURE nachbestellung_zusammenstellen ()
+BEGIN
+DECLARE var_done INT DEFAULT 0;
+DECLARE a VARCHAR(13);
+DECLARE p DECIMAL(4,2);
+DECLARE b INT(3);
+DECLARE cur CURSOR FOR SELECT DISTINCT angebot.preis, angebot.a_nr, lagerbestand.bestand FROM angebot INNER JOIN lagerbestand ON angebot.a_nr = lagerbestand.a_nr;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET var_done = 1;
+
+
+
+OPEN cur;
+
+WHILE NOT var_done DO
+
+FETCH NEXT FROM cur INTO p,a,b;
+
+DELETE FROM `nachbestellen` WHERE nachbestellen.a_nr = a;
+
+IF p < 6 THEN
+	IF b < 10 THEN
+
+		INSERT INTO `nachbestellen` (a_nr,best_anzahl) VALUES(a,(10 - b));
+	END IF;
+
+ELSE
+IF p >= 6 THEN
+	IF b < 5 THEN
+
+		INSERT INTO `nachbestellen` (a_nr,best_anzahl) VALUES(a,(5 - b));
+	END IF;
+END IF;
+END IF;
+END WHILE;
+CLOSE cur;
+END
