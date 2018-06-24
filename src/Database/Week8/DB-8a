@@ -1,0 +1,36 @@
+Atomarität (Abgeschlossenheit)
+
+- Eine Reihe von Transaktionen werden erst als gültig deklariert wenn alle erfolgreich ausgeführt wurden. (ganz oder garnicht)
+
+Bsp:
+
+Bei Bank A wird Betrag X erst abgebucht wenn erfolgreich bei Bank B gutgeschrieben.
+
+
+
+
+Konsistenzerhaltung
+
+- Nach Ausführung einer Transaktion muss ein vorher konsistenter Datensatz weiterhin konsistent sein. (Integritätsbedingungen des Datenbankschema werden vor Abschluss der Transaktion überprüft)
+
+Bsp:
+
+Wenn eine Überweisung von Person A an Person B ausgeführt wird muss die Zuordnung von Sender & Empfänger analog der Überweisung stattfinden.
+
+
+Isolation
+
+Datensätze werden vor Ausführung einer Transaktion für nebenläufige Transaktionen gesperrt um Beeinflussungen zu vermeiden.
+
+Bsp:
+
+Mehrere Überweisungen von A nach B dürfen nicht gleichzeitig ablaufen sondern müssen in eine Warteschlange eingereieht werden.
+
+
+Dauerhaftigkeit
+
+Daten müssen nach erfolgreichen Abschluss einer Transaktion dauerhaft gespeichert sein.
+
+Bsp:
+
+Getätigte Überweisungen von A nach B müssen nach mehreren Jahren / Systemabstürzen noch dauerthaft nachvollziehbar abgespeichert sein.
